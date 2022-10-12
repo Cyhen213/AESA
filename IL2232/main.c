@@ -28,5 +28,12 @@ int main(int argc, const char * argv[]) {
   res1=take(res, res1, 8);
   res2=drop(res, res2, 16, 8);
   print_array(res2, sizeof(res_drop)/sizeof(c[0]));
+
+  int fanout_length=8;
+  int fanout_value=6;
+  int fanout_array[8]={0};
+  int *fanout_res=fanout_array;
+  fanout_res=fanoutn(fanout_value, fanout_res, fanout_length);
+  print_array(fanout_res, fanout_length);
   return 0;
 }

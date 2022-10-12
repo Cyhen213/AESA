@@ -16,8 +16,10 @@ int *concate(int *array1, int *array2, int *result, const int len1, const int le
 int *take(int *input_array, int *result, int take_n);
 
 int *drop(int *input_array, int *result, int array_len, int drop_n);
-//void fanout();
-//void mealy();
+
+int *fanoutn(int input_value, int *result, int n);
+
+//int mealy();
 
 
 #endif /* skeletons_h */

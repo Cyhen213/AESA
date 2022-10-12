@@ -45,3 +45,12 @@ int *drop(int *input_array, int *result, int array_len, int drop_n)
   return result;
 }
 
+int *fanoutn(int input_value, int *result, int n_times)
+{
+  for(int i=0;i<n_times;i++)
+  {
+    *(result+i)=input_value;
+  }
+  return result;
+}
+
