@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		216B70AB28F7202E0091B436 /* skeletons.c in Sources */ = {isa = PBXBuildFile; fileRef = 216B70A928F7202E0091B436 /* skeletons.c */; };
+		216B70B428F862000091B436 /* AESA.c in Sources */ = {isa = PBXBuildFile; fileRef = 216B70B328F862000091B436 /* AESA.c */; };
 		21D844FC28F55DEB005268A3 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 21D844FB28F55DEB005268A3 /* main.c */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +25,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		216B70A928F7202E0091B436 /* skeletons.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = skeletons.c; sourceTree = "<group>"; };
+		216B70AA28F7202E0091B436 /* skeletons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = skeletons.h; sourceTree = "<group>"; };
+		216B70B228F862000091B436 /* AESA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AESA.h; sourceTree = "<group>"; };
+		216B70B328F862000091B436 /* AESA.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = AESA.c; sourceTree = "<group>"; };
 		21D844F828F55DEB005268A3 /* IL2232 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = IL2232; sourceTree = BUILT_PRODUCTS_DIR; };
 		21D844FB28F55DEB005268A3 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +64,10 @@
 			isa = PBXGroup;
 			children = (
 				21D844FB28F55DEB005268A3 /* main.c */,
+				216B70A928F7202E0091B436 /* skeletons.c */,
+				216B70AA28F7202E0091B436 /* skeletons.h */,
+				216B70B228F862000091B436 /* AESA.h */,
+				216B70B328F862000091B436 /* AESA.c */,
 			);
 			path = IL2232;
 			sourceTree = "<group>";
@@ -119,6 +129,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				216B70B428F862000091B436 /* AESA.c in Sources */,
+				216B70AB28F7202E0091B436 /* skeletons.c in Sources */,
 				21D844FC28F55DEB005268A3 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

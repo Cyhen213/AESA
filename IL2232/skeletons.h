@@ -19,7 +19,5 @@ int *drop(int *input_array, int *result, int array_len, int drop_n);
 
 int *fanoutn(int input_value, int *result, int n);
 
-//int mealy();
-
 
 #endif /* skeletons_h */
