@@ -19,5 +19,8 @@ int *drop(int *input_array, int *result, int array_len, int drop_n);
 
 int *fanoutn(int input_value, int *result, int n);
 
+void *farm11(int (*operation)(int),int *result, int *input_array, int array_len);
 
+int add(int input1, int input2);
+int add_one(int input);
 #endif /* skeletons_h */
