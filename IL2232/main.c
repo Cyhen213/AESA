@@ -10,6 +10,7 @@
 #include "AESA.h"
 #define Nfft 3//for illustration purpose, actual is 256
 #define Nb 4 //same as above
+#define resultMatrix_div_inputMatrix 2
 //
 //int main(int argc, const char * argv[]) {
 //######test for take ,drop ,<++>#######
@@ -102,24 +103,34 @@
 //}
 //
 //test for 2d matrix
-void stencil(int (*input_matrix)[Nfft], int (*result_matrix)[Nfft])
+void stencil_for_one_dim(int (*input_matrix)[Nfft], int (*result_matrix)[Nfft])
 {
   //description:  input a 2D array, and calculate how many elements expected to be given out. Then iterate to assign the values
-  print_array(*input_matrix, Nfft);
-  
+  int i;
+  for(i=0;i<(Nb-1)*resultMatrix_div_inputMatrix;i++)
+  {
+    for(int j=0;j<Nfft;j++)
+    {
+      *(*(result_matrix+i)+j)=*(*(input_matrix+i%Nb)+j);
+    }
+  }
 }
 
 int main(int argc, const char *argv[])
 {
 
   int matrix[Nb][Nfft]={{2,3,4},
-                          {5,6,7},
-                          {8,9,3},
-                          {3,6,9}};
-  int (*matrix_ptr)[3]=matrix;
+                        {5,6,7},
+                        {8,9,3},
+                        {3,6,9}};
+  int (*matrix_ptr)[Nfft]=matrix;
   
-  int result_matrix[Nb][Nfft]={0};
+  int result_matrix[(Nb-1)*resultMatrix_div_inputMatrix][Nfft]={0};
   int (*result_matrix_ptr)[Nfft]=result_matrix;
-  stencil(matrix_ptr,result_matrix_ptr);
+  stencil_for_one_dim(matrix_ptr, result_matrix_ptr);
+  for(int i=0;i<6;i++)
+  {
+    print_array(*(result_matrix_ptr+i), Nfft);
+    printf("\n");
+  }
 }
-
