@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include "skeletons.h"
 #include "AESA.h"
+#define Nfft 3//for illustration purpose, actual is 256
+#define Nb 4 //same as above
 //
 //int main(int argc, const char * argv[]) {
 //######test for take ,drop ,<++>#######
@@ -61,10 +63,10 @@
 //  int *outputPtr=output;
 //  int *restCubePtr=restCube;
 //  int (*cubePtr)[cubesize]=cubes;
-// 
+//
 //  for(int i=0;i<cubenum;i++)
 //  {
-//    overlap(*(cubePtr+i), nextStatePtr, currentStatePtr, outputPtr, restCubePtr,cubesize);
+//    overlap(*(cubePtr+i), nextStatePtr, currentStatePtr, outputPtr, restCubePtr, cubesize);
 //    printf("output is going to be: ");
 //    print_array(outputPtr, cubesize);
 //    printf("\n");
@@ -99,3 +101,25 @@
 //  return 0;
 //}
 //
+//test for 2d matrix
+void stencil(int (*input_matrix)[Nfft], int (*result_matrix)[Nfft])
+{
+  //description:  input a 2D array, and calculate how many elements expected to be given out. Then iterate to assign the values
+  print_array(*input_matrix, Nfft);
+  
+}
+
+int main(int argc, const char *argv[])
+{
+
+  int matrix[Nb][Nfft]={{2,3,4},
+                          {5,6,7},
+                          {8,9,3},
+                          {3,6,9}};
+  int (*matrix_ptr)[3]=matrix;
+  
+  int result_matrix[Nb][Nfft]={0};
+  int (*result_matrix_ptr)[Nfft]=result_matrix;
+  stencil(matrix_ptr,result_matrix_ptr);
+}
+

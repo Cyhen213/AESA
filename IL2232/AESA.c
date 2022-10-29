@@ -22,20 +22,3 @@ void overlap(int *inputCube, int *nextState, int *currentState, int *output, int
     *(currentState+i)=*(nextState+i);
   }
 }
-//Implementation without atom functions:
-
-//int *overlap(int *currentState, int *inputCube, int *nextState, int *output, int cubesize)
-//{
-//  for(int i=0;i<cubesize;i++)
-//  {
-//    if (i<cubesize/2) {
-//      *(output+i)=*(currentState+i);
-//      *(nextState+i)=*(inputCube+i+cubesize/2);
-//    }
-//    else{
-//      *(output+i)=*(inputCube+i-cubesize/2);
-//    }
-//  }
-//  return output;
-//}
-

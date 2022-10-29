@@ -75,6 +75,12 @@ void reduce(int (*operation)(int, int), int *result, int *input_array, int array
     *result=operation(*result,*(input_array+i));
   }
 }
+//void stencil(int (*input_matrix)[], int matrix_row, int matrix_col, int *result)
+//{
+//  //description:  input a 2D array, and calculate how many elements expected to be given out. Then iterate to assign the values
+//  
+//}
+
 
 //simple example for farm
 //description
