@@ -10,6 +10,6 @@
 
 #include <stdio.h>
 #include "skeletons.h"
-int *overlap(int *inputCube, int *nextState, int *output, int *restCube ,int cubesize);
+void overlap(int *inputCube, int *nextState, int *currentState, int *output, int *restCube ,int cubesize);
 
 #endif /* AESA_h */

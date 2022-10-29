@@ -41,11 +41,12 @@
   
 //######teste for overlap#####
 //
-//int main(int argc, const char * argv[]) {
+//int main(int argc, const char * argv[])
+//{
 //  const int cubenum=4;
 //  const int cubesize=8;
-//  int initState[cubesize/2]={0};
 //  int nextState[cubesize/2]={0};
+//  int currentState[cubesize/2]={0};
 //  int cubes[cubenum][cubesize]={{1,2,3,4,5,6,7,8},
 //                                {9,8,7,6,5,4,3,2},
 //                                {2,4,6,8,6,4,2,1},
@@ -53,20 +54,17 @@
 //  int output[cubesize]={0};
 //  int restCube[cubesize/2]={0};
 //
-//  int *initStatePtr=initState;
 //  int *nextStatePtr=nextState;
+//  int *currentStatePtr=currentState;
+//
+//  
 //  int *outputPtr=output;
 //  int *restCubePtr=restCube;
 //  int (*cubePtr)[cubesize]=cubes;
-//
+// 
 //  for(int i=0;i<cubenum;i++)
 //  {
-//    if (i==0) {
-//      nextStatePtr=overlap(*(cubePtr), initStatePtr, outputPtr, restCubePtr,cubesize);
-//    }
-//    else{
-//      nextStatePtr=overlap(*(cubePtr+i), nextStatePtr, outputPtr, restCubePtr,cubesize);
-//    }
+//    overlap(*(cubePtr+i), nextStatePtr, currentStatePtr, outputPtr, restCubePtr,cubesize);
 //    printf("output is going to be: ");
 //    print_array(outputPtr, cubesize);
 //    printf("\n");
@@ -80,24 +78,24 @@
 //######teste for farm11#####
 //######teste for reduce#####
 
-int main(int argc, const char * argv[]) {
-  int array1[4]={1,2,3,4};
-  int array2[4]={2,3,6,7};
-  int result_array[4]={0};
-  // these 2 lines below are for the reduce function
-//  int result=0;
-//  int *result_ptr=&result;
-  //
-  int *array1_ptr=array1;
-  int *array2_ptr=array2;
-  
-  int *result_array_ptr=result_array;
-//  farm11(add_one, result_array_ptr, array1_ptr, 4);
+//int main(int argc, const char * argv[]) {
+//  int array1[4]={1,2,3,4};
+//  int array2[4]={2,3,6,7};
+//  int result_array[4]={0};
+////   these 2 lines below are for the reduce function
+////  int result=0;
+////  int *result_ptr=&result;
+//  //
+//  int *array1_ptr=array1;
+//  int *array2_ptr=array2;
+//
+//  int *result_array_ptr=result_array;
+////  farm11(add_one, result_array_ptr, array1_ptr, 4);
+////  print_array(result_array_ptr, 4);
+////  reduce(add, result_ptr, array1_ptr, 4);
+////  printf(" %d \n", *result_ptr);
+//  farm21(add, result_array_ptr, array1_ptr, array2_ptr, 4);
 //  print_array(result_array_ptr, 4);
-//  reduce(add, result_ptr, array1_ptr, 4);
-//  printf(" %d \n", *result_ptr);
-  farm21(add, result_array_ptr, array1_ptr, array2_ptr, 4);
-  print_array(result_array_ptr, 4);
-  return 0;
-}
-  
+//  return 0;
+//}
+//

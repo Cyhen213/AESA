@@ -15,7 +15,7 @@ void print_array(int *array, int length)
 }
 //concate two arrays
 //implementation of <++>
-int *concate(int *array1, int *array2,int *result, const int len1,const int len2)
+void concate(int *array1, int *array2,int *result, const int len1,const int len2)
 {
   for(int i=0;i<len1;i++)
   {
@@ -25,34 +25,30 @@ int *concate(int *array1, int *array2,int *result, const int len1,const int len2
   {
     *(result+len1+i)=*(array2+i);
   }
-  return result;
 }
 //take n elements from an input array
-int *take(int *input_array, int *result, int take_n)
+void take(int *input_array, int *result, int take_n)
 {
   for(int i=0;i<take_n;i++)
   {
     *(result+i)=*(input_array+i);
   }
-  return result;
 }
 //drop n elements from an input array
-int *drop(int *input_array, int *result, int array_len, int drop_n)
+void drop(int *input_array, int *result, int array_len, int drop_n)
 {
   for(int i=drop_n;i<array_len;i++)
   {
     *(result+i-drop_n)=*(input_array+i);
   }
-  return result;
 }
 //repeat a value n times and store in an array
-int *fanoutn(int input_value, int *result, int n_times)
+void fanoutn(int input_value, int *result, int n_times)
 {
   for(int i=0;i<n_times;i++)
   {
     *(result+i)=input_value;
   }
-  return result;
 }
 //farm11
 void farm11(int (*operation)(int), int *result, int *input_array, int array_len)

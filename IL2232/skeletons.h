@@ -10,14 +10,14 @@
 #define skeletons_h
 void print_array(int *array, int length);
 
-int *concate(int *array1, int *array2, int *result, const int len1, const int len2);
+void concate(int *array1, int *array2, int *result, const int len1, const int len2);
 //implementation of <++> operation
 
-int *take(int *input_array, int *result, int take_n);
+void take(int *input_array, int *result, int take_n);
 
-int *drop(int *input_array, int *result, int array_len, int drop_n);
+void drop(int *input_array, int *result, int array_len, int drop_n);
 
-int *fanoutn(int input_value, int *result, int n);
+void fanoutn(int input_value, int *result, int n);
 
 void farm11(int (*operation)(int),int *result, int *input_array, int array_len);
 void farm21(int (*operation)(int,int), int *result, int *input_array1, int *input_array2, int array_len);
