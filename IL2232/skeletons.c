@@ -55,16 +55,32 @@ int *fanoutn(int input_value, int *result, int n_times)
   return result;
 }
 //farm11
-void *farm11(int (*operation)(int), int *result, int *input_array, int array_len)
+void farm11(int (*operation)(int), int *result, int *input_array, int array_len)
 {
   for(int i=0;i<array_len;i++)
   {
     *(result+i)=operation(*(input_array+i));
   }
-  return result;
 }
-//simple example for farm
+//farm21
+void farm21(int (*operation)(int,int), int *result, int *input_array1, int *input_array2, int array_len)
+{
+  for(int i=0;i<array_len;i++)
+  {
+    *(result+i)=operation(*(input_array1+i),*(input_array2+i));
+  }
+}
 
+void reduce(int (*operation)(int, int), int *result, int *input_array, int array_len)
+{
+  *result=operation(*input_array,*(input_array+1));
+  for(int i=2;i<array_len;i++)
+  {
+    *result=operation(*result,*(input_array+i));
+  }
+}
+
+//simple example for farm
 //description
 //functions below are the concrete compute operations can be passed to farm
 int add(int input1, int input2)

@@ -78,14 +78,25 @@
 
 
 //######teste for farm11#####
+//######teste for reduce#####
+
 int main(int argc, const char * argv[]) {
   int array1[4]={1,2,3,4};
+  int array2[4]={2,3,6,7};
   int result_array[4]={0};
-  
+  // these 2 lines below are for the reduce function
+//  int result=0;
+//  int *result_ptr=&result;
+  //
   int *array1_ptr=array1;
-  int *result_array_ptr=result_array;
+  int *array2_ptr=array2;
   
-  farm11(add_one, result_array_ptr, array1_ptr, 4);
+  int *result_array_ptr=result_array;
+//  farm11(add_one, result_array_ptr, array1_ptr, 4);
+//  print_array(result_array_ptr, 4);
+//  reduce(add, result_ptr, array1_ptr, 4);
+//  printf(" %d \n", *result_ptr);
+  farm21(add, result_array_ptr, array1_ptr, array2_ptr, 4);
   print_array(result_array_ptr, 4);
   return 0;
 }
