@@ -228,6 +228,29 @@ int *reduce1d(int (*operation)(int, int), int *input_array, int array_len)
   }
   return result;
 }
+
+int *** stencil2d(int in_d1, int in_d2, int a [in_d1][in_d2], int stencil_length){
+    int d1 = in_d1 - stencil_length + 1;
+    int d2 = stencil_length;
+    int d3 = in_d2;
+    int *** result = (int ***) malloc (d1 * sizeof(int **));
+    for (int i = 0; i < d1; i++){
+      result[i] = (int **) malloc (d2 * sizeof(int*));
+    }
+    for (int i = 0; i < d1; i++){
+        for (int j = 0; j < d2; j++){
+          result[i][j] = (int *) malloc (d3 * sizeof(int));
+        }
+    }
+    for (int i = 0; i < d1; i++){
+        for (int j = 0; j < d2; j++){
+            for (int k = 0; k < d3; k++){
+              result[i][j][k] = a[i + j][k];
+            }
+        }
+    }
+    return result;
+}
 //void stencil(int (*input_matrix)[], int matrix_row, int matrix_col, int *result)
 //{
 //  //description:  input a 2D array, and calculate how many elements expected to be given out. Then iterate to assign the values
