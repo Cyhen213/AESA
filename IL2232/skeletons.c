@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 //print function
+//allocate dynamic space for a input cube
 int ***allocate_cube(int d1,int d2,int d3,int cube[d1][d2][d3])
 {
   int ***result=(int ***) malloc (d1*sizeof(int **));

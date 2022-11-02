@@ -10,5 +10,7 @@
 
 #include <stdio.h>
 #include "skeletons.h"
-int ***overlap(int d1,int d2,int d3,int ***Cube);
+int ***overlap(int d1,int d2,int d3,int ***Cube,int ***nextState);
+int ***StateUpdate(int d1,int d2,int d3,int ***inputCube);
+
 #endif /* AESA_h */

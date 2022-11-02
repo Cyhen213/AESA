@@ -26,20 +26,39 @@ int main(int argc, const char *argv[])
 //  int cube1[2][2][2]={{{1,2},{3,4}},{{5,6},{7,8}}};
 //  int ***result=take3d(2, 2, 2, cube1, 1);
 //  print_cube(1, 2, 2, result);
-  int cube[2][2][2]={{{1,2},{3,4}},{{5,6},{7,8}}};
+  int cube1[2][2][2]={{{1,2},{3,4}},{{5,6},{7,8}}};
+  int cube2[2][2][2]={{{4,5},{1,8}},{{3,9},{0,4}}};
+  int initial[1][2][2]={0};
   //用一个allocate函数为每一个输入的cube分配三维指针动态内存。
-  int ***cube1=allocate_cube(2, 2, 2, cube);
- 
+  int ***cube1ptr=allocate_cube(2,2,2,cube1);
+  int ***cube2ptr=allocate_cube(2,2,2,cube2);
+  int ***initState=allocate_cube(2,2,2,initial);
 //  print_cube(2, 2, 2, cube1);
 
 //  int ***result=take3d(2, 2, 2, cube1, 1);
 //  print_cube(1, 2, 2, result);
 //  free_cube(1, 2, 2, result);
-  int ***result=overlap(2,2,2,cube1);
-  print_cube(2, 2, 2, result);
+  int ***result1=overlap(2,2,2,cube1ptr,initState);
+  int ***nextState=StateUpdate(2, 2, 2, cube1ptr);
+  printf("output cube:\n ");
+  print_cube(2, 2, 2, result1);
+  printf("nextState is set to be: \n");
+  print_cube(1, 2, 2, nextState);
+  
+  int ***result2=overlap(2,2,2,cube2ptr,nextState);
+  nextState=StateUpdate(2, 2, 2, cube2ptr);
+
+  printf("output cube:\n ");
+  print_cube(2, 2, 2, result2);
+  printf("nextState is set to be: \n");
+  print_cube(1, 2, 2, nextState);
+  
+  free_cube(2, 2, 2, cube1ptr);
+  free_cube(2, 2, 2, cube2ptr);
+  free_cube(2, 2, 2, result1);
+  free_cube(2, 2, 2, result2);
+  free_cube(1, 2, 2, nextState);
 
   
-//  free_cube(2, 2, 2, cube1);
-
   return 0;
 }
