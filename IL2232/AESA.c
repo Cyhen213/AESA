@@ -41,26 +41,18 @@ int ***overlap(int d1,int d2,int d3,int ***inputCube,int ***nextState)
       newCube[i][j]=(int *) malloc (d3*sizeof(int));
     }
   }
-  
   delayCube=take3d(d1,d2,d3,inputCube,d1/2);
   newCube=concate3d_cube(d1/2,d2,d3,nextState,delayCube);
-//  nextState=drop3d(d1,d2,d3,inputCube,d1/2);
-  return newCube;
-}
-int ***StateUpdate(int d1,int d2,int d3,int ***inputCube)
-{
-  int ***nextState=(int ***) malloc (d1/2*sizeof(int **));
-  for(int i=0;i<d1/2;i++)
-  {
-    nextState[i]=(int **) malloc (d2*sizeof(int *));
-  }
+  int ***temp_result=drop3d(d1,d2,d3,inputCube,d1/2);
   for(int i=0;i<d1/2;i++)
   {
     for(int j=0;j<d2;j++)
     {
-      nextState[i][j]=(int *) malloc (d3*sizeof(int));
+      for(int k=0;k<d3;k++)
+      {
+        nextState[i][j][k]=temp_result[i][j][k];
+      }
     }
   }
-  nextState=drop3d(d1,d2,d3,inputCube,d1/2);
-  return nextState;
+  return newCube;
 }

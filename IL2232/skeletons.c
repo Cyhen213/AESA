@@ -8,7 +8,24 @@
 #include <stdio.h>
 //print function
 //allocate dynamic space for a input cube
-int ***allocate_cube(int d1,int d2,int d3,int cube[d1][d2][d3])
+int ***allocate_cube(int d1,int d2,int d3)
+{
+  int ***result=(int ***) malloc (d1*sizeof(int **));
+  for(int i=0;i<d1;i++)
+  {
+    result[i]=(int **) malloc (d2*sizeof(int *));
+  }
+  for(int i=0;i<d1;i++)
+  {
+    for(int j=0;j<d2;j++)
+    {
+      result[i][j]=(int *) malloc (d3*sizeof(int));
+    }
+  }
+  return result;
+}
+
+int ***allocate_cube_from_cube(int d1,int d2,int d3,int cube[d1][d2][d3])
 {
   int ***result=(int ***) malloc (d1*sizeof(int **));
   for(int i=0;i<d1;i++)
@@ -195,8 +212,50 @@ int *fanoutn1d(int input_value, int n_times)
   }
   return result;
 }
+int **fanoutn2d(int *input_array, int array_length, int n_times)
+{
+  int **result=(int **) malloc (n_times*sizeof(int *));
+  for(int i=0;i<n_times;i++)
+  {
+    result[i]=(int *) malloc (array_length*sizeof(int));
+  }
+  for(int i=0;i<n_times;i++)
+  {
+    for(int j=0;j<array_length;j++)
+    {
+      result[i][j]=input_array[j];
+    }
+  }
+  return result;
+}
+int ***fanoutn3d(int **input_matrix, int d1, int d2, int n_times)
+{
+  int ***result=(int ***) malloc (n_times*sizeof(int **));
+  for(int i=0;i<d1;i++)
+  {
+    result[i]=(int **) malloc (d1*sizeof(int *));
+  }
+  for(int i=0;i<n_times;i++)
+  {
+    for(int j=0;j<d1;j++)
+    {
+      result[i][j]=(int *) malloc (d2*sizeof(int));
+    }
+  }
+  for(int i=0;i<n_times;i++)
+  {
+    for(int j=0;j<d1;j++)
+    {
+      for(int k=0;k<d2;k++)
+      {
+        result[i][j][k]=input_matrix[i][j];
+      }
+    }
+  }
+  return result;
+}
 //farm11
-int *farm111d(int (*operation)(int), int *input_array, int array_len)
+int *farm11_1d(int (*operation)(int), int *input_array, int array_len)
 {
   int *result=(int *) malloc ((array_len)*sizeof(int));
 
@@ -207,7 +266,7 @@ int *farm111d(int (*operation)(int), int *input_array, int array_len)
   return result;
 }
 //farm21
-int *farm211d(int (*operation)(int,int), int *input_array1, int *input_array2, int array_len)
+int *farm21_1d(int (*operation)(int,int), int *input_array1, int *input_array2, int array_len)
 {
   int *result=(int *) malloc ((array_len)*sizeof(int));
   for(int i=0;i<array_len;i++)
@@ -229,7 +288,7 @@ int *reduce1d(int (*operation)(int, int), int *input_array, int array_len)
   return result;
 }
 
-int *** stencil2d(int in_d1, int in_d2, int a [in_d1][in_d2], int stencil_length){
+int *** stencil2d(int in_d1, int in_d2, int **a, int stencil_length){
     int d1 = in_d1 - stencil_length + 1;
     int d2 = stencil_length;
     int d3 = in_d2;

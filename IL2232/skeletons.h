@@ -8,7 +8,8 @@
 
 #ifndef skeletons_h
 #define skeletons_h
-int ***allocate_cube(int d1,int d2,int d3,int cube[d1][d2][d3]);
+int ***allocate_cube(int d1,int d2,int d3);
+int ***allocate_cube_from_cube(int d1,int d2,int d3,int cube[d1][d2][d3]);
 void free_cube(int d1,int d2,int d3,int ***cube);
 
 void print_array(int *array, int length);
@@ -25,8 +26,8 @@ int ***drop3d(int d1,int d2,int d3,int ***input_cube, int drop_n);
 
 int *fanoutn1d(int input_value, int n);
 
-int *farm111d(int (*operation)(int), int *input_array, int array_len);
-int *farm211d(int (*operation)(int,int), int *input_array1, int *input_array2, int array_len);
+int *farm11_1d(int (*operation)(int), int *input_array, int array_len);
+int *farm21_1d(int (*operation)(int,int), int *input_array1, int *input_array2, int array_len);
 
 int *reduce1d(int (*operation)(int, int), int *input_array, int array_len);
 int *** stencil2d(int in_d1, int in_d2, int a [in_d1][in_d2], int stencil_length);
