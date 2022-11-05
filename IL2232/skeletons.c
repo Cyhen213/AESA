@@ -332,14 +332,20 @@ int *farm21_1d(int (*operation)(int,int), int *input_array1, int *input_array2, 
   return result;
 }
 
-int **farm41_2d(int **(*operation)(int,int,int **,int **,int **,int **),int d1,int d2,int **input_matrix1,int **input_matrix2,int **input_matrix3,int **input_matrix4)
+int **farm41_2d(int (*operation)(int,int,int,int),int d1,int d2,int **input_matrix1,int **input_matrix2,int **input_matrix3,int **input_matrix4)
 {
-  int **result=(int **) malloc (d1*sizeof(int));
+  int **result=(int **) malloc (d1*sizeof(int*));
   for(int i=0;i<d1;i++)
   {
     result[i]=(int *) malloc (d2*sizeof(int));
   }
-  result=operation(d1,d2,input_matrix1,input_matrix2,input_matrix3,input_matrix4);
+  for(int i=0;i<d1;i++)
+  {
+    for(int j=0;j<d2;j++)
+    {
+      result[i][j]=operation(input_matrix1[i][j],input_matrix2[i][j],input_matrix3[i][j],input_matrix4[i][j]);
+    }
+  }
   return result;
 }
 

@@ -35,13 +35,14 @@ int *farm11_1d(int (*operation)(int), int *input_array, int array_len);
 int **farm11_2d(int *(*operation)(int,int,int **), int d1,int d2,int **input_matrix);
 int *farm11_2dto1d(int *(*operation)(int,int,int **), int d1,int d2,int **input_matrix);
 int *farm21_1d(int (*operation)(int,int), int *input_array1, int *input_array2, int array_len);
-int **farm41_2d(int **(*operation)(int,int,int **,int **,int **,int **),int d1,int d2,int **input_matrix1,int **input_matrix2,int **input_matrix3,int **input_matrix4);
+int **farm41_2d(int (*operation)(int,int,int,int),int d1,int d2,int **input_matrix1,int **input_matrix2,int **input_matrix3,int **input_matrix4);
 
 int ***group2d(int d1,int d2,int **input_matrix,int num);
 
 int *reduce1d(int (*operation)(int, int), int array_len, int *input_array);
 int *reduceV2d( int d1,int d2,int *(*operation)(int*, int*,int d2),int **input_matrix);
 int **reduceV3d(int *(*operation)(int*, int*), int d1,int d2,int d3,int ***input_cube);
+
 
 int ***stencil2d(int in_d1, int in_d2, int **a, int stencil_length);
 

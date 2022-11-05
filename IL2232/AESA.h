@@ -16,7 +16,7 @@ int *geomean(int d1,int d2,int **input_matrix);
 int *arithmean(int d1,int d2,int **input_matrix);
 int *md(int d1,int d2,int **input_matrix);
 
-int **normCfa(int d1,int d2,int **m,int **a,int **l,int **e);
+int normCfa(int m,int a,int l,int e);
 int **fCFAR(int d1,int d2,int **input_matrix);
 
 

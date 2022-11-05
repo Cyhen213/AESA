@@ -91,35 +91,18 @@ int *md(int d1,int d2,int **input_matrix)
   return result;
 }
 //对md需要做一个升维才能一起运算。
-int **normCfa(int d1,int d2,int **m,int **a,int **l,int **e)
+int normCfa(int m,int a,int l,int e)
 {
-  int **result=(int **) malloc (d1*sizeof(int *));
-  for(int i=0;i<d1;i++)
+  int find_max=m;
+  if(find_max<l)
   {
-    result[i]=(int *) malloc (d2*sizeof(int));
+    find_max=l;
   }
-  int **find_max=(int **) malloc (d1*sizeof(int *));
-  for(int i=0;i<d1;i++)
+  else if(find_max<e)
   {
-    find_max[i]=(int *) malloc (d2*sizeof(int));
+    find_max=e;
   }
-  
-  for(int i=0;i<d1;i++)
-  {
-    for(int j=0;j<d2;j++)
-    {
-      if(m[i][j]<l[i][j])
-      {
-        find_max[i][j]=l[i][j];
-      }
-      else if (l[i][j]<e[i][j])
-      {
-        find_max[i][j]=e[i][j];
-      }
-      else find_max[i][j]=m[i][j];
-      result[i][j]=pow(2,(5+log2(a[i][j])-find_max[i][j]));
-    }
-  }
+  int result=pow(2,(5+log2(a-find_max)));
   return result;
 }
 
@@ -150,10 +133,8 @@ int **fCFAR(int d1,int d2,int **input_matrix)
   int **repeated_minimum=fanoutn2d(minimum_result, d2, d1);
   int **dummy_emv=fanoutn2d(fanoutn1d(-100, d2), d2, 3);//3=d1-(d1-4+1)
   int **dummy_lmv=fanoutn2d(fanoutn1d(-100, d2), d2, 3+2);//3=d1-(d1-4+1)+(drop 2)
-
   int **lmv=concate2d_mat((d1-4+1-2),5, d2, drop2d((d1-4+1), d2, arithm, 2), dummy_lmv);
   int **emv=concate2d_mat(3, (d1-4+1), d2, dummy_emv, arithm);
-  
   result=farm41_2d(normCfa, d1, d2, repeated_minimum, input_matrix, lmv, emv);
   
   return result;
