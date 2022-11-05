@@ -11,6 +11,13 @@
 #include <stdio.h>
 #include "skeletons.h"
 int ***overlap(int d1,int d2,int d3,int ***Cube,int ***nextState);
-int ***StateUpdate(int d1,int d2,int d3,int ***inputCube);
+int **fCFAR(int d1,int d2,int **input_matrix);
+int *geomean(int d1,int d2,int **input_matrix);
+int *arithmean(int d1,int d2,int **input_matrix);
+int *md(int d1,int d2,int **input_matrix);
+
+int **normCfa(int d1,int d2,int **m,int **a,int **l,int **e);
+int **fCFAR(int d1,int d2,int **input_matrix);
+
 
 #endif /* AESA_h */

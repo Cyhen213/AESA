@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "skeletons.h"
 #include "AESA.h"
@@ -63,50 +64,90 @@
 //
 //  return 0;
 //}
-
+//
+//Test for the sequential cubes
+//int main(int argc, const char *argv[])
+//{
+//  int d1=2;
+//  int d2=2;
+//  int d3=2;
+//  int a[32]={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32};
+////Description : allocate 4 cubes
+//  int ****cubes=(int ****) malloc (4*sizeof(int ***));
+//  for(int i=0;i<4;i++)
+//  {
+//    cubes[i]=allocate_cube(2, 2, 2);
+//  }
+////Description : assign value for the allocated cubes from the read array.
+//  for(int i=0;i<4;i++)
+//  {
+//    for(int j=0;j<d1;j++)
+//    {
+//      for(int k=0;k<d2;k++)
+//      {
+//        for(int l=0;l<d3;l++)
+//        {
+//          cubes[i][j][k][l]=a[8*i+j*4+k*2+l];
+//        }
+//      }
+//    }
+//  }
+//
+//  int initial[1][2][2]={0};
+//  int ***nextState=allocate_cube_from_cube(1,2,2,initial);
+//  for(int i=0;i<4;i++)
+//  {
+//    int ***newCube=overlap(2, 2, 2, cubes[i], nextState);
+//    printf("output cube:\n ");
+//    print_cube(2, 2, 2, newCube);
+//    printf("nextState is set to be: \n");
+//    print_cube(1, 2, 2, nextState);
+//  }
+////  release 4 cubes
+//  for(int i=0;i<4;i++)
+//  {
+//    free_cube(2, 2, 2, cubes[i]);
+//  }
+//  free(cubes);
+//  free_cube(1, 2, 2, nextState);
+//  return 0;
+//}
 int main(int argc, const char *argv[])
 {
-  int d1=2;
-  int d2=2;
-  int d3=2;
-  int a[32]={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32};
-//Description : allocate 4 cubes
-  int ****cubes=(int ****) malloc (4*sizeof(int ***));
-  for(int i=0;i<4;i++)
+  int **input_matrix=(int **) malloc (8*sizeof(int *));
+  for(int i=0;i<8;i++)
   {
-    cubes[i]=allocate_cube(2, 2, 2);
+    input_matrix[i]=(int *) malloc (4*sizeof(int));
   }
-//Description : assign value for the allocated cubes from the read array.
-  for(int i=0;i<4;i++)
+  int mat[8][4]={{64,128,64,128},{256,128,64,128},{128,128,128,128},{512,128,64,128},{64,128,64,128},{256,128,64,128},{128,128,128,128},{512,128,64,128}};
+  for(int i=0;i<8;i++)
   {
-    for(int j=0;j<d1;j++)
+    for(int j=0;j<4;j++)
     {
-      for(int k=0;k<d2;k++)
-      {
-        for(int l=0;l<d3;l++)
-        {
-          cubes[i][j][k][l]=a[8*i+j*4+k*2+l];
-        }
-      }
+      input_matrix[i][j]=mat[i][j];
     }
   }
-
-  int initial[1][2][2]={0};
-  int ***nextState=allocate_cube_from_cube(1,2,2,initial);
-  for(int i=0;i<4;i++)
+//  test for arithmean
+//  int *result=arithmean(4,4,input_matrix);
+//  print_array(result,4);
+//  int **arithm=(int **) malloc (3*sizeof(int *));
+//  for(int i=0;i<5;i++)
+//  {
+//    arithm[i]=(int *) malloc (4*sizeof(int));
+//  }
+//  int ***neighbors=stencil2d(8, 4, input_matrix, 4);
+//  for(int i=0;i<5;i++)
+//  {
+//    arithm[i]=arithmean(4, 4, neighbors[i]);
+//    print_array(arithm[i], 4);
+//    printf("\n ");
+//  }
+//
+  int **result=fCFAR(8, 4, input_matrix);
+  for(int i=0;i<8;i++)
   {
-    int ***newCube=overlap(2, 2, 2, cubes[i], nextState);
-    printf("output cube:\n ");
-    print_cube(2, 2, 2, newCube);
-    printf("nextState is set to be: \n");
-    print_cube(1, 2, 2, nextState);
+    print_array(result[i], 4);
+    printf("\n ");
   }
-//  release 4 cubes 
-  for(int i=0;i<4;i++)
-  {
-    free_cube(2, 2, 2, cubes[i]);
-  }
-  free(cubes);
-  free_cube(1, 2, 2, nextState);
   return 0;
 }

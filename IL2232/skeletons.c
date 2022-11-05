@@ -6,6 +6,8 @@
 //
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
+#define N 1
 //print function
 //allocate dynamic space for a input cube
 int ***allocate_cube(int d1,int d2,int d3)
@@ -92,7 +94,25 @@ int *concate1d(int *array1, int *array2, int array_len)
     if(j<array_len) {result[j]=array1[j];}
     else {result[j]=array2[j-array_len];}
   }
-//有个关于concate的问题，concate升不升维度？  不升吧。 目前在用不升的方法。
+  return result;
+}
+int **concate2d_mat(int d1_mat1, int d1_mat2, int d2, int **input_matrix1, int **input_matrix2)
+{
+  int **result=(int **) malloc ((d1_mat1+d1_mat2)*sizeof(int *));
+  for(int i=0;i<(d1_mat1+d1_mat2);i++)
+  {
+    result[i]=(int *) malloc (d2*sizeof(int));
+  }
+  for(int i=0;i<(d1_mat1+d1_mat2);i++)
+  {
+    for(int j=0;j<d2;j++)
+    {
+      if(i<d1_mat1){
+        result[i][j]=input_matrix1[i][j];
+      }
+      else result[i][j]=input_matrix2[i-d1_mat1][j];
+    }
+  }
   return result;
 }
 int ***concate3d_cube(int d1,int d2,int d3,int ***array1, int ***array2)
@@ -171,6 +191,22 @@ int *drop1d(int *input_array, int array_len, int drop_n)
   for(int i=0;i<array_len-drop_n;i++)
   {
     result[i]=input_array[array_len-drop_n+i];
+  }
+  return result;
+}
+int **drop2d(int d1,int d2,int **input_matrix,int drop_n)
+{
+  int **result=(int **) malloc ((d1-drop_n)*sizeof(int *));
+  for(int i=0;i<d1-drop_n;i++)
+  {
+    result[i]=(int *) malloc (d2*sizeof(int));
+  }
+  for(int i=drop_n;i<d1;i++)
+  {
+    for(int j=0;j<d2;j++)
+    {
+      result[i-drop_n][j]=input_matrix[i][j];
+    }
   }
   return result;
 }
@@ -265,6 +301,26 @@ int *farm11_1d(int (*operation)(int), int *input_array, int array_len)
   }
   return result;
 }
+
+int **farm11_2d(int **(*operation)(int,int,int **), int d1,int d2,int **input_matrix)
+{
+  int **result=(int **) malloc (d1*sizeof(int));
+  for(int i=0;i<d1;i++)
+  {
+    result[i]=(int *) malloc (d2*sizeof(int));
+  }
+
+  result=operation(d1,d2,input_matrix);
+  return result;
+}
+
+int *farm11_2dto1d(int *(*operation)(int,int,int **), int d1,int d2,int **input_matrix)
+{
+  int *result=(int *) malloc (d2*sizeof(int));
+
+  result=operation(d1,d2,input_matrix);
+  return result;
+}
 //farm21
 int *farm21_1d(int (*operation)(int,int), int *input_array1, int *input_array2, int array_len)
 {
@@ -276,7 +332,34 @@ int *farm21_1d(int (*operation)(int,int), int *input_array1, int *input_array2, 
   return result;
 }
 
-int *reduce1d(int (*operation)(int, int), int *input_array, int array_len)
+int **farm41_2d(int **(*operation)(int,int,int **,int **,int **,int **),int d1,int d2,int **input_matrix1,int **input_matrix2,int **input_matrix3,int **input_matrix4)
+{
+  int **result=(int **) malloc (d1*sizeof(int));
+  for(int i=0;i<d1;i++)
+  {
+    result[i]=(int *) malloc (d2*sizeof(int));
+  }
+  result=operation(d1,d2,input_matrix1,input_matrix2,input_matrix3,input_matrix4);
+  return result;
+}
+
+int ***group2d(int d1,int d2,int **input_matrix,int num)
+{
+  int ***result=allocate_cube(d1/num,num,d2);
+  for(int i=0;i<d1/num;i++)
+  {
+    for(int j=0;j<num;j++)
+    {
+      for(int k=0;k<d2;k++)
+      {
+        result[i][j][k]=input_matrix[i*num+j][k];
+      }
+    }
+  }
+  return result;
+}
+
+int *reduce1d(int (*operation)(int, int), int array_len, int *input_array)
 {
   int *result=(int *) malloc ((1)*sizeof(int));
 
@@ -287,8 +370,34 @@ int *reduce1d(int (*operation)(int, int), int *input_array, int array_len)
   }
   return result;
 }
+int *reduceV2d( int d1,int d2,int *(*operation)(int*, int*,int d2),int **input_matrix)
+{
+  int *result=(int *) malloc (d2*sizeof(int));
+  for(int i=0;i<d1;i++){
+    result=operation(input_matrix[0],input_matrix[1],d2);
+  }
+  for(int i=2;i<d1;i++){
+      result=operation(result,input_matrix[i],d2);
+  }
+  return result;
+}
+//reduceVector 3d （对于三维数据cube储存的每一个一维向量操作得到二维矩阵）
+int **reduceV3d(int d1,int d2,int d3, int *(*operation)(int*, int*,int d3),int ***input_cube)
+{
+  int **result=(int **) malloc (d1*sizeof(int *));
+  for(int i=0;i<d1;i++){
+    result[i]=operation(input_cube[i][0],input_cube[i][1],d3);
+  }
+  for(int i=0;i<d1;i++){
+    for(int j=2;j<d2;j++){
+      result[i]=operation(result[i],input_cube[i][j],d3);
+    }
+  }
+  return result;
+}
 
-int *** stencil2d(int in_d1, int in_d2, int **a, int stencil_length){
+int ***stencil2d(int in_d1, int in_d2, int **a, int stencil_length)
+{
     int d1 = in_d1 - stencil_length + 1;
     int d2 = stencil_length;
     int d3 = in_d2;
@@ -328,4 +437,30 @@ int add(int input1, int input2)
 int add_one(int input)
 {
   return input+1;
+}
+int *addV(int *inputVector1,int *inputVector2,int len_array)
+{
+  int *result=farm21_1d(add, inputVector1, inputVector2, len_array);
+  return result;
+}
+int minimum(int num1,int num2)
+{
+  if(num1<num2) {return num1;}
+  else return num2;
+}
+
+int *minimumVec(int *inputV1,int *inputV2 ,int d2)
+{
+  int *result=farm21_1d(minimum,inputV1,inputV2, d2);
+  return result;
+}
+
+int logBase2_div4(int input)
+{
+//  printf("%f   ",log2(input/4));
+  return log2(input/4);
+}
+int div_N(int input)
+{
+  return input/N;
 }
