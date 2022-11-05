@@ -33,7 +33,8 @@ int ***fanoutn3d(int **input_matrix, int d1, int d2, int n_times);
 
 int *farm11_1d(int (*operation)(int), int *input_array, int array_len);
 int **farm11_2d(int *(*operation)(int,int,int **), int d1,int d2,int **input_matrix);
-int *farm11_2dto1d(int *(*operation)(int,int,int **), int d1,int d2,int **input_matrix);
+//下面farm11-2dto1d可以删了，因为包含reduce的操作直接写函数本身更简单
+//int *farm11_2dto1d(int *(*operation)(int,int,int **), int d1,int d2,int **input_matrix);
 int *farm21_1d(int (*operation)(int,int), int *input_array1, int *input_array2, int array_len);
 int **farm41_2d(int (*operation)(int,int,int,int),int d1,int d2,int **input_matrix1,int **input_matrix2,int **input_matrix3,int **input_matrix4);
 

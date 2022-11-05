@@ -56,7 +56,8 @@ int ***overlap(int d1,int d2,int d3,int ***inputCube,int ***nextState)
   }
   return newCube;
 }
-//geomean 对矩阵操作，要用farm11_2d扩展
+//geomean 对矩阵操作，要用farm11_2d扩展   但是不需要。因为这里再geomean中包含了一个reduce操作，直接写geomean会更简单
+//arithmean 和上面同理。
 int *geomean(int d1,int d2,int **input_matrix)
 {
   int *reduced_vector=reduceV2d(d1, d2, addV, input_matrix);
@@ -74,7 +75,7 @@ int *arithmean(int d1,int d2,int **input_matrix)
   }
   for(int i=0;i<d1/2;i++)
   {
-    temp_result_1[i]=farm11_2dto1d(geomean, d1/2, d2, grouped_result[i]);
+    temp_result_1[i]=geomean(d1/2, d2, grouped_result[i]);
     //(actual is 4 2 for demostration purpose)
   }//every grouped vector is translated
   //into a local sum
@@ -127,7 +128,7 @@ int **fCFAR(int d1,int d2,int **input_matrix)
   }
   for(int i=0;i<(d1-4+1);i++)
   {
-    arithm[i]=farm11_2dto1d(arithmean, 4, d2, neighbors[i]);
+    arithm[i]=arithmean(4, d2, neighbors[i]);
   }
   int *minimum_result=md(d1, d2, input_matrix);
   int **repeated_minimum=fanoutn2d(minimum_result, d2, d1);

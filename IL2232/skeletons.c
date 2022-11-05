@@ -314,13 +314,6 @@ int **farm11_2d(int **(*operation)(int,int,int **), int d1,int d2,int **input_ma
   return result;
 }
 
-int *farm11_2dto1d(int *(*operation)(int,int,int **), int d1,int d2,int **input_matrix)
-{
-  int *result=(int *) malloc (d2*sizeof(int));
-
-  result=operation(d1,d2,input_matrix);
-  return result;
-}
 //farm21
 int *farm21_1d(int (*operation)(int,int), int *input_array1, int *input_array2, int array_len)
 {
