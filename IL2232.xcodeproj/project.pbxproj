@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		216B70AB28F7202E0091B436 /* skeletons.c in Sources */ = {isa = PBXBuildFile; fileRef = 216B70A928F7202E0091B436 /* skeletons.c */; };
-		216B70B428F862000091B436 /* AESA.c in Sources */ = {isa = PBXBuildFile; fileRef = 216B70B328F862000091B436 /* AESA.c */; };
-		21D844FC28F55DEB005268A3 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 21D844FB28F55DEB005268A3 /* main.c */; };
+		215EF69029252DFF0082F413 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 215EF68B29252DFF0082F413 /* main.c */; };
+		215EF69129252DFF0082F413 /* AESA.c in Sources */ = {isa = PBXBuildFile; fileRef = 215EF68C29252DFF0082F413 /* AESA.c */; };
+		215EF69229252DFF0082F413 /* skeletons.c in Sources */ = {isa = PBXBuildFile; fileRef = 215EF68D29252DFF0082F413 /* skeletons.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,17 +25,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		215EF66E29226E5C0082F413 /* data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data; sourceTree = SOURCE_ROOT; };
-		215EF66F2922E8800082F413 /* CT_input.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = CT_input.csv; sourceTree = "<group>"; };
-		215EF6702922E8800082F413 /* CFAR_input.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = CFAR_input.csv; sourceTree = "<group>"; };
-		215EF6712922E8800082F413 /* input_test.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = input_test.csv; sourceTree = "<group>"; };
-		215EF67229238E3C0082F413 /* processed_Cfar.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = processed_Cfar.csv; sourceTree = "<group>"; };
-		216B70A928F7202E0091B436 /* skeletons.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = skeletons.c; sourceTree = "<group>"; };
-		216B70AA28F7202E0091B436 /* skeletons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = skeletons.h; sourceTree = "<group>"; };
-		216B70B228F862000091B436 /* AESA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AESA.h; sourceTree = "<group>"; };
-		216B70B328F862000091B436 /* AESA.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = AESA.c; sourceTree = "<group>"; };
+		215EF68929252D6A0082F413 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = data; sourceTree = "<group>"; };
+		215EF68B29252DFF0082F413 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		215EF68C29252DFF0082F413 /* AESA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AESA.c; sourceTree = "<group>"; };
+		215EF68D29252DFF0082F413 /* skeletons.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = skeletons.c; sourceTree = "<group>"; };
+		215EF68E29252DFF0082F413 /* AESA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AESA.h; sourceTree = "<group>"; };
+		215EF68F29252DFF0082F413 /* skeletons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = skeletons.h; sourceTree = "<group>"; };
 		21D844F828F55DEB005268A3 /* IL2232 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = IL2232; sourceTree = BUILT_PRODUCTS_DIR; };
-		21D844FB28F55DEB005268A3 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,16 +64,12 @@
 		21D844FA28F55DEB005268A3 /* IL2232 */ = {
 			isa = PBXGroup;
 			children = (
-				215EF66E29226E5C0082F413 /* data */,
-				21D844FB28F55DEB005268A3 /* main.c */,
-				215EF67229238E3C0082F413 /* processed_Cfar.csv */,
-				216B70A928F7202E0091B436 /* skeletons.c */,
-				216B70AA28F7202E0091B436 /* skeletons.h */,
-				216B70B228F862000091B436 /* AESA.h */,
-				216B70B328F862000091B436 /* AESA.c */,
-				215EF6702922E8800082F413 /* CFAR_input.csv */,
-				215EF66F2922E8800082F413 /* CT_input.csv */,
-				215EF6712922E8800082F413 /* input_test.csv */,
+				215EF68C29252DFF0082F413 /* AESA.c */,
+				215EF68E29252DFF0082F413 /* AESA.h */,
+				215EF68B29252DFF0082F413 /* main.c */,
+				215EF68D29252DFF0082F413 /* skeletons.c */,
+				215EF68F29252DFF0082F413 /* skeletons.h */,
+				215EF68929252D6A0082F413 /* data */,
 			);
 			path = IL2232;
 			sourceTree = "<group>";
@@ -139,9 +131,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				216B70B428F862000091B436 /* AESA.c in Sources */,
-				216B70AB28F7202E0091B436 /* skeletons.c in Sources */,
-				21D844FC28F55DEB005268A3 /* main.c in Sources */,
+				215EF69029252DFF0082F413 /* main.c in Sources */,
+				215EF69129252DFF0082F413 /* AESA.c in Sources */,
+				215EF69229252DFF0082F413 /* skeletons.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

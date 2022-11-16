@@ -166,11 +166,12 @@
 
 int main()
 {
-  FILE *fp = fopen("processed_Cfar.csv", "r");
+  FILE *fp = fopen("data/processed_Cfar.csv", "r");
   if (fp == NULL) {
       fprintf(stderr, "fopen() failed.\n");
       exit(EXIT_FAILURE);
   }
+
   char row[4820];
   char *tok;
   int k=0;
@@ -198,19 +199,19 @@ int main()
     }k=0;
   }
   fclose(fp);
-//print_cube(NoB, Nob, NoFFT, data_cube);
+ print_cube(NoB, Nob, NoFFT, data_cube);
 //  double **result=fCFAR(Nob,NoFFT,data_cube[0]);
-  double ***result_cube=allocate_cube(NoB, Nob, NoFFT);
-  
-  for(int i=0;i<NoB;i++)
-  {
-    result_cube[i]=fCFAR(Nob,NoFFT,data_cube[i]);
-  }
-  print_cube(NoB, Nob, NoFFT, result_cube);
+//  double ***result_cube=allocate_cube(NoB, Nob, NoFFT);
+//
+//  for(int i=0;i<NoB;i++)
+//  {
+//    result_cube[i]=fCFAR(Nob,NoFFT,data_cube[i]);
+//  }
+//  print_cube(NoB, Nob, NoFFT, result_cube);
 //  print_matrix(Nob, NoFFT, result);
 //  free_matrix(Nob, NoFFT, result);
   free_cube(NoB, Nob, NoFFT, data_cube);
-  free_cube(NoB, Nob, NoFFT, result_cube);
+//  free_cube(NoB, Nob, NoFFT, result_cube);
   
   return 0;
 }

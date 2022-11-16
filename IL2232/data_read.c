@@ -9,7 +9,7 @@
 #define NoChannel 16
 int main()
 {
-  FILE *fp = fopen("processed_Cfar.csv", "r");
+  FILE *fp = fopen("data/processed_Cfar.csv", "r");
   if (fp == NULL) {
       fprintf(stderr, "fopen() failed.\n");
       exit(EXIT_FAILURE);
