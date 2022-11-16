@@ -7,38 +7,38 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#define N 1
+#define NoFFT 256
 //print function
 //allocate dynamic space for a input cube
-int ***allocate_cube(int d1,int d2,int d3)
+double ***allocate_cube(int d1,int d2,int d3)
 {
-  int ***result=(int ***) malloc (d1*sizeof(int **));
+  double ***result=(double ***) malloc (d1*sizeof(double **));
   for(int i=0;i<d1;i++)
   {
-    result[i]=(int **) malloc (d2*sizeof(int *));
+    result[i]=(double **) malloc (d2*sizeof(double *));
   }
   for(int i=0;i<d1;i++)
   {
     for(int j=0;j<d2;j++)
     {
-      result[i][j]=(int *) malloc (d3*sizeof(int));
+      result[i][j]=(double *) malloc (d3*sizeof(double));
     }
   }
   return result;
 }
 
-int ***allocate_cube_from_cube(int d1,int d2,int d3,int cube[d1][d2][d3])
+double ***allocate_cube_from_cube(int d1,int d2,int d3,double cube[d1][d2][d3])
 {
-  int ***result=(int ***) malloc (d1*sizeof(int **));
+  double ***result=(double ***) malloc (d1*sizeof(double **));
   for(int i=0;i<d1;i++)
   {
-    result[i]=(int **) malloc (d2*sizeof(int *));
+    result[i]=(double **) malloc (d2*sizeof(double *));
   }
   for(int i=0;i<d1;i++)
   {
     for(int j=0;j<d2;j++)
     {
-      result[i][j]=(int *) malloc (d3*sizeof(int));
+      result[i][j]=(double *) malloc (d3*sizeof(double));
     }
   }
   for(int i=0;i<d1;i++)
@@ -53,41 +53,69 @@ int ***allocate_cube_from_cube(int d1,int d2,int d3,int cube[d1][d2][d3])
   }
   return result;
 }
-void free_cube(int d1,int d2,int d3,int ***cube)
+void free_matrix(int d1,int d2,double **matrix)
+{
+  for(int i=0;i<d1;i++)
+  {
+    free(matrix[i]);
+    matrix[i]=NULL;
+  }
+  free(matrix);
+  matrix=NULL;
+  printf("释放一个矩阵\n");
+
+}
+
+void free_cube(int d1,int d2,int d3,double ***cube)
 {
   for (int i = 0; i < d1; i++){
       for (int j = 0; j < d2; j++){
           free(cube[i][j]);
+        cube[i][j]=NULL;
       }
       free(cube[i]);
+    cube[i]=NULL;
   }
   free(cube);
+  cube=NULL;
+  printf("释放一个数据块\n");
+
 }
-void print_array(int *array, int length)
+void print_array(double *array, int length)
 {
   for(int i=0;i<length;i++)
   {
-    printf("%d  ", *(array+i));
+    printf("%f ", array[i]);
+  }
+  printf("\n");
+}
+void print_matrix(int d1,int d2,double **matrix)
+{
+  for (int i = 0; i < d1; i++){
+      for (int j = 0; j < d2; j++){
+              printf("%f ", matrix[i][j]);
+      }
+    printf("\n");
   }
 }
-void print_cube(int d1,int d2,int d3,int ***cube)
+void print_cube(int d1,int d2,int d3,double ***cube)
 {
   for (int i = 0; i < d1; i++){
       for (int j = 0; j < d2; j++){
           for (int k = 0; k < d3; k++){
-              printf("%d ", cube[i][j][k]);
+              printf("%f ", cube[i][j][k]);
           }
-          printf("\n");
+        printf("\n");
       }
-      printf("\n");
+    printf("\n");
   }
 }
 
 //concate two arrays
 //implementation of <++>
-int *concate1d(int *array1, int *array2, int array_len)
+double *concate1d(double *array1, double *array2, int array_len)
 {
-  int *result=(int *) malloc ((array_len)*sizeof(int));
+  double *result=(double *) malloc ((array_len)*sizeof(double));
 
   for(int j=0;j<array_len;j++)
   {
@@ -96,12 +124,12 @@ int *concate1d(int *array1, int *array2, int array_len)
   }
   return result;
 }
-int **concate2d_mat(int d1_mat1, int d1_mat2, int d2, int **input_matrix1, int **input_matrix2)
+double **concate2d_mat(int d1_mat1, int d1_mat2, int d2, double **input_matrix1, double **input_matrix2)
 {
-  int **result=(int **) malloc ((d1_mat1+d1_mat2)*sizeof(int *));
+  double **result=(double **) malloc ((d1_mat1+d1_mat2)*sizeof(double *));
   for(int i=0;i<(d1_mat1+d1_mat2);i++)
   {
-    result[i]=(int *) malloc (d2*sizeof(int));
+    result[i]=(double *) malloc (d2*sizeof(double));
   }
   for(int i=0;i<(d1_mat1+d1_mat2);i++)
   {
@@ -115,20 +143,20 @@ int **concate2d_mat(int d1_mat1, int d1_mat2, int d2, int **input_matrix1, int *
   }
   return result;
 }
-int ***concate3d_cube(int d1,int d2,int d3,int ***array1, int ***array2)
+double ***concate3d_cube(int d1,int d2,int d3,double ***array1, double ***array2)
 {
 //  description: In this case, the d1,d2,d3 for array2 and array1 are the same
 //  d1 in the "cut" cube is half of the input cube
-  int ***result=(int ***) malloc (2*d1*sizeof(int **));
+  double ***result=(double ***) malloc (2*d1*sizeof(double **));
   for(int i=0;i<2*d1;i++)
   {
-    result[i]=(int **) malloc (d2*sizeof(int *));
+    result[i]=(double **) malloc (d2*sizeof(double *));
   }
   for(int i=0;i<2*d1;i++)
   {
     for(int j=0;j<d2;j++)
     {
-      result[i][j]=(int *) malloc (d3*sizeof(int));
+      result[i][j]=(double *) malloc (d3*sizeof(double));
     }
   }
   for(int i=0;i<2*d1;i++)
@@ -147,9 +175,9 @@ int ***concate3d_cube(int d1,int d2,int d3,int ***array1, int ***array2)
 
 
 //take n elements from an input array
-int *take1d(int *input_array, int take_n)
+double *take1d(double *input_array, int take_n)
 {
-  int *result=(int *) malloc (take_n*sizeof(int));
+  double *result=(double *) malloc (take_n*sizeof(double));
   for(int i=0;i<take_n;i++)
   {
     result[i]=input_array[i];
@@ -157,18 +185,18 @@ int *take1d(int *input_array, int take_n)
   return result;
 }
 
-int ***take3d(int d1,int d2,int d3,int ***input_cube, int take_n)
+double ***take3d(int d1,int d2,int d3,double ***input_cube, int take_n)
 {
-  int ***result=(int ***) malloc (take_n*sizeof(int **));
+  double ***result=(double ***) malloc (take_n*sizeof(double **));
   for(int i=0;i<take_n;i++)
   {
-    result[i]=(int **) malloc (d2*sizeof(int *));
+    result[i]=(double **) malloc (d2*sizeof(double *));
   }
   for(int i=0;i<take_n;i++)
   {
     for(int j=0;j<d2;j++)
     {
-      result[i][j]=(int *) malloc (d3*sizeof(int));
+      result[i][j]=(double *) malloc (d3*sizeof(double));
     }
   }
   for(int i=0;i<take_n;i++)
@@ -184,9 +212,9 @@ int ***take3d(int d1,int d2,int d3,int ***input_cube, int take_n)
   return result;
 }
 //drop n elements from an input array
-int *drop1d(int *input_array, int array_len, int drop_n)
+double *drop1d(double *input_array, int array_len, int drop_n)
 {
-  int *result=(int *) malloc ((array_len-drop_n)*sizeof(int));
+  double *result=(double *) malloc ((array_len-drop_n)*sizeof(double));
 
   for(int i=0;i<array_len-drop_n;i++)
   {
@@ -194,35 +222,37 @@ int *drop1d(int *input_array, int array_len, int drop_n)
   }
   return result;
 }
-int **drop2d(int d1,int d2,int **input_matrix,int drop_n)
+double **drop2d(int d1,int d2,double **input_matrix,int drop_n)
 {
-  int **result=(int **) malloc ((d1-drop_n)*sizeof(int *));
+  double **result=(double **) malloc ((d1-drop_n)*sizeof(double *));
   for(int i=0;i<d1-drop_n;i++)
   {
-    result[i]=(int *) malloc (d2*sizeof(int));
+    result[i]=(double *) malloc (d2*sizeof(double));
   }
-  for(int i=drop_n;i<d1;i++)
+  for(int i=0;i<d1-drop_n;i++)
   {
     for(int j=0;j<d2;j++)
     {
-      result[i-drop_n][j]=input_matrix[i][j];
+//      printf("%f ",input_matrix[i][j]);
+      result[i][j]=input_matrix[i+drop_n][j];
+      printf("%f  ",result[i][j]);
     }
   }
   return result;
 }
 
-int ***drop3d(int d1,int d2,int d3,int ***input_cube, int drop_n)
+double ***drop3d(int d1,int d2,int d3,double ***input_cube, int drop_n)
 {
-  int ***result=(int ***) malloc ((d1-drop_n)*sizeof(int **));
+  double ***result=(double ***) malloc ((d1-drop_n)*sizeof(double **));
   for(int i=0;i<(d1-drop_n);i++)
   {
-    result[i]=(int **) malloc (d2*sizeof(int *));
+    result[i]=(double **) malloc (d2*sizeof(double *));
   }
   for(int i=0;i<(d1-drop_n);i++)
   {
     for(int j=0;j<d2;j++)
     {
-      result[i][j]=(int *) malloc (d3*sizeof(int));
+      result[i][j]=(double *) malloc (d3*sizeof(double));
     }
   }
   for(int i=drop_n;i<d1;i++)
@@ -238,9 +268,9 @@ int ***drop3d(int d1,int d2,int d3,int ***input_cube, int drop_n)
   return result;
 }
 //repeat a value n times and store in an array
-int *fanoutn1d(int input_value, int n_times)
+double *fanoutn1d(int input_value, int n_times)
 {
-  int *result=(int *) malloc ((n_times)*sizeof(int));
+  double *result=(double *) malloc ((n_times)*sizeof(double));
 
   for(int i=0;i<n_times;i++)
   {
@@ -248,12 +278,12 @@ int *fanoutn1d(int input_value, int n_times)
   }
   return result;
 }
-int **fanoutn2d(int *input_array, int array_length, int n_times)
+double **fanoutn2d(double *input_array, int array_length, int n_times)
 {
-  int **result=(int **) malloc (n_times*sizeof(int *));
+  double **result=(double **) malloc (n_times*sizeof(double *));
   for(int i=0;i<n_times;i++)
   {
-    result[i]=(int *) malloc (array_length*sizeof(int));
+    result[i]=(double *) malloc (array_length*sizeof(double));
   }
   for(int i=0;i<n_times;i++)
   {
@@ -264,18 +294,18 @@ int **fanoutn2d(int *input_array, int array_length, int n_times)
   }
   return result;
 }
-int ***fanoutn3d(int **input_matrix, int d1, int d2, int n_times)
+double ***fanoutn3d(double **input_matrix, int d1, int d2, int n_times)
 {
-  int ***result=(int ***) malloc (n_times*sizeof(int **));
+  double ***result=(double ***) malloc (n_times*sizeof(double **));
   for(int i=0;i<d1;i++)
   {
-    result[i]=(int **) malloc (d1*sizeof(int *));
+    result[i]=(double **) malloc (d1*sizeof(double *));
   }
   for(int i=0;i<n_times;i++)
   {
     for(int j=0;j<d1;j++)
     {
-      result[i][j]=(int *) malloc (d2*sizeof(int));
+      result[i][j]=(double *) malloc (d2*sizeof(double));
     }
   }
   for(int i=0;i<n_times;i++)
@@ -291,9 +321,9 @@ int ***fanoutn3d(int **input_matrix, int d1, int d2, int n_times)
   return result;
 }
 //farm11
-int *farm11_1d(int (*operation)(int), int *input_array, int array_len)
+double *farm11_1d(double (*operation)(double), double *input_array, int array_len)
 {
-  int *result=(int *) malloc ((array_len)*sizeof(int));
+  double *result=(double *) malloc ((array_len)*sizeof(double));
 
   for(int i=0;i<array_len;i++)
   {
@@ -302,12 +332,12 @@ int *farm11_1d(int (*operation)(int), int *input_array, int array_len)
   return result;
 }
 
-int **farm11_2d(int **(*operation)(int,int,int **), int d1,int d2,int **input_matrix)
+double **farm11_2d(double **(*operation)(int,int,double **), int d1,int d2,double **input_matrix)
 {
-  int **result=(int **) malloc (d1*sizeof(int));
+  double **result=(double **) malloc (d1*sizeof(double));
   for(int i=0;i<d1;i++)
   {
-    result[i]=(int *) malloc (d2*sizeof(int));
+    result[i]=(double *) malloc (d2*sizeof(double));
   }
 
   result=operation(d1,d2,input_matrix);
@@ -315,9 +345,9 @@ int **farm11_2d(int **(*operation)(int,int,int **), int d1,int d2,int **input_ma
 }
 
 //farm21
-int *farm21_1d(int (*operation)(int,int), int *input_array1, int *input_array2, int array_len)
+double *farm21_1d(double (*operation)(double,double), double *input_array1, double *input_array2, int array_len)
 {
-  int *result=(int *) malloc ((array_len)*sizeof(int));
+  double *result=(double *) malloc ((array_len)*sizeof(double));
   for(int i=0;i<array_len;i++)
   {
     result[i]=operation(*(input_array1+i),*(input_array2+i));
@@ -325,12 +355,12 @@ int *farm21_1d(int (*operation)(int,int), int *input_array1, int *input_array2, 
   return result;
 }
 
-int **farm41_2d(int (*operation)(int,int,int,int),int d1,int d2,int **input_matrix1,int **input_matrix2,int **input_matrix3,int **input_matrix4)
+double **farm41_2d(double (*operation)(double,double,double,double),int d1,int d2,double **input_matrix1,double **input_matrix2,double **input_matrix3,double **input_matrix4)
 {
-  int **result=(int **) malloc (d1*sizeof(int*));
+  double **result=(double **) malloc (d1*sizeof(double*));
   for(int i=0;i<d1;i++)
   {
-    result[i]=(int *) malloc (d2*sizeof(int));
+    result[i]=(double *) malloc (d2*sizeof(double));
   }
   for(int i=0;i<d1;i++)
   {
@@ -342,9 +372,9 @@ int **farm41_2d(int (*operation)(int,int,int,int),int d1,int d2,int **input_matr
   return result;
 }
 
-int ***group2d(int d1,int d2,int **input_matrix,int num)
+double ***group2d(int d1,int d2,double **input_matrix,int num)
 {
-  int ***result=allocate_cube(d1/num,num,d2);
+  double ***result=allocate_cube(d1/num,num,d2);
   for(int i=0;i<d1/num;i++)
   {
     for(int j=0;j<num;j++)
@@ -358,9 +388,9 @@ int ***group2d(int d1,int d2,int **input_matrix,int num)
   return result;
 }
 
-int *reduce1d(int (*operation)(int, int), int array_len, int *input_array)
+double *reduce1d(double (*operation)(double, double), int array_len, double *input_array)
 {
-  int *result=(int *) malloc ((1)*sizeof(int));
+  double *result=(double *) malloc ((1)*sizeof(double));
 
   *result=operation(*input_array,*(input_array+1));
   for(int i=2;i<array_len;i++)
@@ -369,21 +399,19 @@ int *reduce1d(int (*operation)(int, int), int array_len, int *input_array)
   }
   return result;
 }
-int *reduceV2d( int d1,int d2,int *(*operation)(int*, int*,int d2),int **input_matrix)
+double *reduceV2d( int d1,int d2,double *(*operation)(double*, double*,int d2),double **input_matrix)
 {
-  int *result=(int *) malloc (d2*sizeof(int));
-  for(int i=0;i<d1;i++){
-    result=operation(input_matrix[0],input_matrix[1],d2);
-  }
+  double *result=(double *) malloc (d2*sizeof(double));
+  result=operation(input_matrix[0],input_matrix[1],d2);
   for(int i=2;i<d1;i++){
       result=operation(result,input_matrix[i],d2);
   }
   return result;
 }
 //reduceVector 3d （对于三维数据cube储存的每一个一维向量操作得到二维矩阵）
-int **reduceV3d(int d1,int d2,int d3, int *(*operation)(int*, int*,int d3),int ***input_cube)
+double **reduceV3d(int d1,int d2,int d3, double *(*operation)(double*, double*,int d3),double ***input_cube)
 {
-  int **result=(int **) malloc (d1*sizeof(int *));
+  double **result=(double **) malloc (d1*sizeof(double *));
   for(int i=0;i<d1;i++){
     result[i]=operation(input_cube[i][0],input_cube[i][1],d3);
   }
@@ -395,18 +423,18 @@ int **reduceV3d(int d1,int d2,int d3, int *(*operation)(int*, int*,int d3),int *
   return result;
 }
 
-int ***stencil2d(int in_d1, int in_d2, int **a, int stencil_length)
+double ***stencil2d(int in_d1, int in_d2, double **a, int stencil_length)
 {
     int d1 = in_d1 - stencil_length + 1;
     int d2 = stencil_length;
     int d3 = in_d2;
-    int *** result = (int ***) malloc (d1 * sizeof(int **));
+    double *** result = (double ***) malloc (d1 * sizeof(double **));
     for (int i = 0; i < d1; i++){
-      result[i] = (int **) malloc (d2 * sizeof(int*));
+      result[i] = (double **) malloc (d2 * sizeof(double*));
     }
     for (int i = 0; i < d1; i++){
         for (int j = 0; j < d2; j++){
-          result[i][j] = (int *) malloc (d3 * sizeof(int));
+          result[i][j] = (double *) malloc (d3 * sizeof(double));
         }
     }
     for (int i = 0; i < d1; i++){
@@ -418,48 +446,45 @@ int ***stencil2d(int in_d1, int in_d2, int **a, int stencil_length)
     }
     return result;
 }
-//void stencil(int (*input_matrix)[], int matrix_row, int matrix_col, int *result)
-//{
-//  //description:  input a 2D array, and calculate how many elements expected to be given out. Then iterate to assign the values
-//  
-//}
-
 
 //simple example for farm
 //description
 //functions below are the concrete compute operations can be passed to farm
-int add(int input1, int input2)
+double add(double input1, double input2)
 {
   return input1+input2;
 }
 
-int add_one(int input)
+double add_one(double input)
 {
   return input+1;
 }
-int *addV(int *inputVector1,int *inputVector2,int len_array)
+double *addV(double *inputVector1,double *inputVector2,int len_array)
 {
-  int *result=farm21_1d(add, inputVector1, inputVector2, len_array);
+  double *result=farm21_1d(add, inputVector1, inputVector2, len_array);
   return result;
 }
-int minimum(int num1,int num2)
+double minimum(double num1,double num2)
 {
   if(num1<num2) {return num1;}
   else return num2;
 }
 
-int *minimumVec(int *inputV1,int *inputV2 ,int d2)
+double *minimumVec(double *inputV1,double *inputV2 ,int d2)
 {
-  int *result=farm21_1d(minimum,inputV1,inputV2, d2);
+  double *result=farm21_1d(minimum,inputV1,inputV2, d2);
   return result;
 }
 
-int logBase2_div4(int input)
+double logBase2_div4(double input)
 {
 //  printf("%f   ",log2(input/4));
   return log2(input/4);
 }
-int div_N(int input)
+double div_N(double input)
 {
-  return input/N;
+  return input/NoFFT;
 }
+
+//In order to construct a vector computing function you can farm21 the operation
+//you would like to use over numbers.

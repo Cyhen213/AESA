@@ -8,14 +8,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
+#include <string.h>
 #include "skeletons.h"
 #include "AESA.h"
-#define Nfft 3//for illustration purpose, actual is 256
-#define Nb 4 //same as above
+#define NoFFT 256//window
+#define Nob 1024 //range
+#define NoB 4//beam
+#define No2Channel 32
+#define NoChannel 16
+
 //test for overlap
-
-
 //int main(int argc, const char *argv[])
 //{
 ////Description :test for the concate3d function
@@ -64,8 +66,8 @@
 //
 //  return 0;
 //}
-//
-//Test for the sequential cubes
+
+////Test for the sequential cubes
 //int main(int argc, const char *argv[])
 //{
 //  int d1=2;
@@ -112,49 +114,104 @@
 //  free_cube(1, 2, 2, nextState);
 //  return 0;
 //}
-int main(int argc, const char *argv[])
-{
-  int **input_matrix=(int **) malloc (8*sizeof(int *));
-  for(int i=0;i<8;i++)
-  {
-    input_matrix[i]=(int *) malloc (4*sizeof(int));
-  }
-  int mat[8][4]={{64,128,64,128},
-                {256,128,64,128},
-                {128,128,128,128},
-                {512,128,64,128},
-                {64,128,64,128},
-                {256,128,64,128},
-                {128,128,128,128},
-                {512,128,64,128}};
-  for(int i=0;i<8;i++)
-  {
-    for(int j=0;j<4;j++)
-    {
-      input_matrix[i][j]=mat[i][j];
-    }
-  }
-//  test for arithmean
-//  int *result=arithmean(4,4,input_matrix);
-//  print_array(result,4);
-//  int **arithm=(int **) malloc (3*sizeof(int *));
-//  for(int i=0;i<5;i++)
+//int main(int argc, const char *argv[])
+//{
+//  double **input_matrix=(double **) malloc (8*sizeof(double *));
+//  for(int i=0;i<8;i++)
 //  {
-//    arithm[i]=(int *) malloc (4*sizeof(int));
+//    input_matrix[i]=(double *) malloc (4*sizeof(double));
 //  }
-//  int ***neighbors=stencil2d(8, 4, input_matrix, 4);
-//  for(int i=0;i<5;i++)
+//  double mat[8][4]={
+//                {0.7,0.3,0.2,0.4},
+//                {0.26,0.48,0.26,0.61},
+//                {0.25,0.52,0.22,0.25},
+//                {0.82,0.73,0.32,0.04},
+//                {0.42,10.33,2.82,0.14},
+//                {0.47,0.14,0.83,0.36},
+//                {0.2,0.8,0.47,0.28},
+//                {0.67,0.5,0.1,0.2}};
+//  for(int i=0;i<8;i++)
 //  {
-//    arithm[i]=arithmean(4, 4, neighbors[i]);
-//    print_array(arithm[i], 4);
+//    for(int j=0;j<4;j++)
+//    {
+//      input_matrix[i][j]=mat[i][j];
+//    }
+//  }
+////  test for arithmean
+////  double *result=arithmean(4,4,input_matrix);
+////  print_array(result,4);
+////  double **arithm=(double **) malloc (3*sizeof(double *));
+////  for(int i=0;i<5;i++)
+////  {
+////    arithm[i]=(double *) malloc (4*sizeof(double));
+////  }
+////  double ***neighbors=stencil2d(8, 4, input_matrix, 4);
+////  for(int i=0;i<5;i++)
+////  {
+////    arithm[i]=arithmean(4, 4, neighbors[i]);
+////    print_array(arithm[i], 4);
+////    printf("\n ");
+////  }
+//
+//  double **result=fCFAR(8, 4, input_matrix);
+//  for(int i=0;i<8;i++)
+//  {
+//    print_array(result[i], 4);
 //    printf("\n ");
 //  }
-//
-  int **result=fCFAR(8, 4, input_matrix);
-  for(int i=0;i<8;i++)
-  {
-    print_array(result[i], 4);
-    printf("\n ");
+//  free_matrix(8,4, result);
+//  free_matrix(8,4,input_matrix);
+//  return 0;
+//}
+
+int main()
+{
+  FILE *fp = fopen("processed_Cfar.csv", "r");
+  if (fp == NULL) {
+      fprintf(stderr, "fopen() failed.\n");
+      exit(EXIT_FAILURE);
   }
+  char row[4820];
+  char *tok;
+  int k=0;
+  double ***data_cube=allocate_cube(NoB, Nob, NoFFT);
+  
+  int cube_idx;
+  int pulse_idx;
+  
+  for(int j=0;j<NoB*Nob;j++)
+  {
+    fgets(row, 4820, fp);
+    tok = strtok(row, ",");
+//      printf("%s\n",tok);
+    cube_idx=j/Nob;
+    pulse_idx=j%Nob;
+    data_cube[cube_idx][pulse_idx][0]=atof(tok);
+//    printf("%d   ",cube_idx);
+//   // printf(" %d   ",pulse_idx);
+    while(tok!=NULL)
+    {
+      k+=1;
+      if(k<NoFFT){data_cube[cube_idx][pulse_idx][k]=atof(tok);}
+      tok=strtok(NULL,",");
+      //printf("%s\n", tok);
+    }k=0;
+  }
+  fclose(fp);
+//print_cube(NoB, Nob, NoFFT, data_cube);
+//  double **result=fCFAR(Nob,NoFFT,data_cube[0]);
+  double ***result_cube=allocate_cube(NoB, Nob, NoFFT);
+  
+  for(int i=0;i<NoB;i++)
+  {
+    result_cube[i]=fCFAR(Nob,NoFFT,data_cube[i]);
+  }
+  print_cube(NoB, Nob, NoFFT, result_cube);
+//  print_matrix(Nob, NoFFT, result);
+//  free_matrix(Nob, NoFFT, result);
+  free_cube(NoB, Nob, NoFFT, data_cube);
+  free_cube(NoB, Nob, NoFFT, result_cube);
+  
   return 0;
 }
+
