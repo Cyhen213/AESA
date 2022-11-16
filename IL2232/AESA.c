@@ -1,9 +1,14 @@
-//
-//  AESA.c
-//  IL2232
-//
-//  Created by gaogao on 2022-10-13.
-//
+/**
+ * @file AESA.c
+ * @author Yuchen
+ * @brief 
+ * @version 0.1
+ * @date 2022-11-16
+ * 
+ * @copyright Copyright (c) 2022
+ * @brief In AESA computation blocks, the assigned useless dynamic spaces need to be released.
+ * REMIND: ALL THE SKELETONS FUNCTION AUTOMATICALLY ALLOCATES DYNAMIC SPACE MUST BE RELEASED.
+ */
 #include <math.h>
 #include "AESA.h"
 #include "skeletons.h"
@@ -14,11 +19,17 @@
 #define NoB 1//beam
 #define No2Channel 32
 #define NoChannel 16
-//Used atom functions:
-//take(int *input_array, int *result, int take_n);
-//concate(int *array1, int *array2, int *result, const int len1, const int len2)
-//drop(int *input_array, int *result, int array_len, int drop_n)
-
+/**
+ * @brief 
+ * - Overlap function execute the 'mealy machine' pattern.
+ * - It delays the input data cube for one state and concate the current state with first half of data cube, storing the last half data cube as next state.
+ * @param d1 The dimension of input cube (d1,d2,d3)
+ * @param d2 
+ * @param d3 
+ * @param inputCube (d1,d2,d3)
+ * @param nextState (d1/2,d2,d3)
+ * @return double*** 
+ */
 double ***overlap(int d1,int d2,int d3,double ***inputCube,double ***nextState)
 {
   double ***delayCube=take3d(d1,d2,d3,inputCube,d1/2);
@@ -36,45 +47,75 @@ double ***overlap(int d1,int d2,int d3,double ***inputCube,double ***nextState)
   }
   free_cube(d1/2, d2, d3, delayCube);
   free_cube(d1/2,d2,d3,temp_result);
-  
   return newCube;
 }
-//geomean 对矩阵操作，要用farm11_2d扩展   但是不需要。因为这里再geomean中包含了一个reduce操作，直接写geomean会更简单
-//arithmean 和上面同理。
+/**
+ * @brief 
+ * - The Geomean function is used in the Cfar operation.
+ * - It computes the vector sum of input matrix, divide the result by 4 and compute the base 2 logarithm of the result.
+ * @param d1 
+ * @param d2 
+ * @param input_matrix (d1,d2)
+ * @return double* (an array)
+ */
 double *geomean(int d1,int d2,double **input_matrix)
 {
   double *reduced_vector=reduceV2d(d1, d2, addV, input_matrix);
   double *result=farm11_1d(logBase2_div4, reduced_vector, d2);
-  //print_array(result, d2);
   free(reduced_vector);
   return result;
 }
+/**
+ * @brief 
+ * - Arithmean is a function used in the Cfar.
+ * - It firstly group the nearest 4 elements in the matrix.
+ * - Next it applies the geomean function on each grouped result generated last step and generate a matrix.
+ * - The vector sum of the last step remaining matrix is computed.
+ * - Divide the vector sum result by NoFFT generates result of the function.
+ * @param d1 
+ * @param d2 
+ * @param input_matrix (d1,d2)
+ * @return double* (an array)
+ */
 double *arithmean(int d1,int d2,double **input_matrix)
 {
-  double ***grouped_result=group2d(d1, d2, input_matrix, 4);//(actual is 4 2 for demostration purpose)
- // print_cube(d1/4, 4, d2, grouped_result);
+  double ***grouped_result=group2d(d1, d2, input_matrix, 4);
   double **temp_result_1=(double **) malloc (d1/4*sizeof(double *));
   for(int i=0;i<d1/4;i++)
   {
     temp_result_1[i]=geomean(4, d2, grouped_result[i]);
-  }//every grouped vector is translated
-  //into a local sum
+  }
   double *temp_result_2=reduceV2d(d1/4,d2,addV,temp_result_1);
-  //a dimension reduction
   double *result=farm11_1d(div_N,temp_result_2,d2);
-  //div a param N for the vecs
   free_cube(d1/4,4,d2, grouped_result);
   free_matrix(d1/4, d2, temp_result_1);
   free(temp_result_2);
   return result;
 }
+/**
+ * @brief 
+ * - Md function computes the smallest value for each position in a vector over the input matrix.
+ * @param d1 
+ * @param d2 
+ * @param input_matrix (d1,d2)
+ * @return double* (an array)
+ */
 double *md(int d1,int d2,double **input_matrix)
 {
   double *result=reduceV2d(d1,d2, minimumVec, input_matrix);
-//  print_matrix(d1, d2, input_matrix);
   return result;
 }
-//对md需要做一个升维才能一起运算。
+/**
+ * @brief
+ * - normCfa function is used in the Cfar.
+ * - Find the max value between minimum value bin, early arrived bin, late arrived bin.
+ * - Do the operation @code pow(2,(5+log2(a-find_max))); @endcode
+ * @param m 
+ * @param a 
+ * @param l 
+ * @param e 
+ * @return double 
+ */
 double normCfa(double m,double a,double l,double e)
 {
   double find_max=m;
@@ -89,30 +130,37 @@ double normCfa(double m,double a,double l,double e)
   double result=pow(2,(5+log2(a-find_max)));
   return result;
 }
-
+/**
+ * @brief
+ * - fCFAR is applied on each matrix inside of data cube.
+ * - This operation can be sequential, or paralleled.
+ * - Firstly, the input matrix is stenciled so that the nearest NoFFT elements is repeated.
+ * - Secondly, the aritmean of each stenciled matrix is computed.
+ * - Next, the minimum bin(repeated to (d1,d2)), late bin(d1,d2) and early bin(d1,d2) are computed.
+ * - Then apply the normCfa and return the result matrix.
+ * @param d1 
+ * @param d2 
+ * @param input_matrix (d1,d2)
+ * @return double** (d1,d2)
+ */
 double **fCFAR(int d1,int d2,double **input_matrix)
 {
   double ***neighbors=stencil2d(d1, d2, input_matrix, NoFFT);
- // print_cube(9, 8, d2, neighbors);
- // neighbors dimension(d1-NoFFT+1,NoFFT,d2)
   double **arithm=(double **) malloc ((d1-NoFFT+1)*sizeof(double *));
   for(int i=0;i<d1-NoFFT+1;i++)
   {
     arithm[i]=arithmean(NoFFT, d2, neighbors[i]);
   }
   double *minimum_result=md(d1, d2, input_matrix);
-  //print_array(minimum_result, d2);
   double **repeated_minimum=fanoutn2d(minimum_result, d2, d1);
   double **dummy_emv=fanoutn2d(fanoutn1d(-100, d2), d2, NoFFT-1);
   double **dummy_lmv=fanoutn2d(fanoutn1d(-100, d2), d2, NoFFT-1+2);
-//  print_matrix(d1-NoFFT+1, d2, arithm);
   double **droped_mat=drop2d(d1-NoFFT+1, d2, arithm, 2);
   double **lmv=concate2d_mat(d1-NoFFT+1-2,NoFFT-1+2, d2,droped_mat, dummy_lmv);
  
   double **emv=concate2d_mat(NoFFT-1,d1-NoFFT+1, d2, dummy_emv, arithm);
   double **result=farm41_2d(normCfa, d1, d2, repeated_minimum, input_matrix, lmv, emv);
 
-//  print_matrix(d1, d2, result);
   free_cube(d1-NoFFT+1, NoFFT,d2, neighbors);
   free_matrix(d1-NoFFT+1, d2, arithm);
   free_matrix(d1-NoFFT+1-2, d2, droped_mat);
@@ -122,8 +170,6 @@ double **fCFAR(int d1,int d2,double **input_matrix)
 
   free_matrix(d1, d2, lmv);
   free_matrix(d1, d2, emv);
-
-//释放内存有问题
   return result;
 }
 //为什么在aesa里面free操作？

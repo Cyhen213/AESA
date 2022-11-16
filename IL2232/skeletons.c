@@ -1,15 +1,25 @@
-//
-//  skeletons.c
-//  IL2232
-//
-//  Created by gaogao on 2022-10-12.
-//
+/**
+ * @file skeletons.c
+ * @author Yuchen
+ * @brief 
+ * @version 0.1
+ * @date 2022-11-16
+ * 
+ * @copyright Copyright (c) 2022
+ * REMIND: ALL THE SKELETONS FUNCTION AUTOMATICALLY ALLOCATES DYNAMIC SPACE.
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #define NoFFT 256
-//print function
-//allocate dynamic space for a input cube
+/**
+ * @brief 
+ * - Allocate_cube allocates (d1,d2,d3) space for elements
+ * @param d1 
+ * @param d2 
+ * @param d3 
+ * @return double*** 
+ */
 double ***allocate_cube(int d1,int d2,int d3)
 {
   double ***result=(double ***) malloc (d1*sizeof(double **));
@@ -26,7 +36,15 @@ double ***allocate_cube(int d1,int d2,int d3)
   }
   return result;
 }
-
+/**
+ * @brief 
+ * - Deep copy operation for input data cube.
+ * @param d1 
+ * @param d2 
+ * @param d3 
+ * @param cube 
+ * @return double*** 
+ */
 double ***allocate_cube_from_cube(int d1,int d2,int d3,double cube[d1][d2][d3])
 {
   double ***result=(double ***) malloc (d1*sizeof(double **));
@@ -53,6 +71,14 @@ double ***allocate_cube_from_cube(int d1,int d2,int d3,double cube[d1][d2][d3])
   }
   return result;
 }
+/**
+ * @brief 
+ * - free a matrix
+ * 
+ * @param d1 
+ * @param d2 
+ * @param matrix 
+ */
 void free_matrix(int d1,int d2,double **matrix)
 {
   for(int i=0;i<d1;i++)
@@ -65,7 +91,15 @@ void free_matrix(int d1,int d2,double **matrix)
   printf("释放一个矩阵\n");
 
 }
-
+/**
+ * @brief 
+ * - free a cube
+ * 
+ * @param d1 
+ * @param d2 
+ * @param d3 
+ * @param cube 
+ */
 void free_cube(int d1,int d2,int d3,double ***cube)
 {
   for (int i = 0; i < d1; i++){
@@ -111,8 +145,14 @@ void print_cube(int d1,int d2,int d3,double ***cube)
   }
 }
 
-//concate two arrays
-//implementation of <++>
+/**
+ * @brief 
+ * - Concate 2 arrays with the same length and return an array with 2*length.
+ * @param array1 
+ * @param array2 
+ * @param array_len 
+ * @return double* 
+ */
 double *concate1d(double *array1, double *array2, int array_len)
 {
   double *result=(double *) malloc ((array_len)*sizeof(double));
@@ -124,6 +164,17 @@ double *concate1d(double *array1, double *array2, int array_len)
   }
   return result;
 }
+/**
+ * @brief
+ * - Concate 2 matrix with first dimenson is equal to d1_mat1 and d1_mat2. 
+ * - Generate a matrix with size of (d1_mat1+d1_mat2, d2)
+ * @param d1_mat1 
+ * @param d1_mat2 
+ * @param d2 
+ * @param input_matrix1 
+ * @param input_matrix2 
+ * @return double** 
+ */
 double **concate2d_mat(int d1_mat1, int d1_mat2, int d2, double **input_matrix1, double **input_matrix2)
 {
   double **result=(double **) malloc ((d1_mat1+d1_mat2)*sizeof(double *));
@@ -143,10 +194,18 @@ double **concate2d_mat(int d1_mat1, int d1_mat2, int d2, double **input_matrix1,
   }
   return result;
 }
+/**
+ * @brief 
+ * - Concate 2 cubes with the same dimensionality (d1,d2,d3)
+ * @param d1 
+ * @param d2 
+ * @param d3 
+ * @param array1 
+ * @param array2 
+ * @return double*** 
+ */
 double ***concate3d_cube(int d1,int d2,int d3,double ***array1, double ***array2)
 {
-//  description: In this case, the d1,d2,d3 for array2 and array1 are the same
-//  d1 in the "cut" cube is half of the input cube
   double ***result=(double ***) malloc (2*d1*sizeof(double **));
   for(int i=0;i<2*d1;i++)
   {
@@ -173,8 +232,13 @@ double ***concate3d_cube(int d1,int d2,int d3,double ***array1, double ***array2
   return result;
 }
 
-
-//take n elements from an input array
+/**
+ * @brief 
+ * - Take first n elements from the input array and return them.
+ * @param input_array 
+ * @param take_n 
+ * @return double* 
+ */
 double *take1d(double *input_array, int take_n)
 {
   double *result=(double *) malloc (take_n*sizeof(double));
@@ -184,7 +248,16 @@ double *take1d(double *input_array, int take_n)
   }
   return result;
 }
-
+/**
+ * @brief 
+ * - Take the first n matrix from cube and return them as a new cube.
+ * @param d1 
+ * @param d2 
+ * @param d3 
+ * @param input_cube 
+ * @param take_n 
+ * @return double*** 
+ */
 double ***take3d(int d1,int d2,int d3,double ***input_cube, int take_n)
 {
   double ***result=(double ***) malloc (take_n*sizeof(double **));
@@ -211,7 +284,14 @@ double ***take3d(int d1,int d2,int d3,double ***input_cube, int take_n)
   }
   return result;
 }
-//drop n elements from an input array
+/**
+ * @brief 
+ * - Drop the first n elements in an array and return the rest.
+ * @param input_array 
+ * @param array_len 
+ * @param drop_n 
+ * @return double* 
+ */
 double *drop1d(double *input_array, int array_len, int drop_n)
 {
   double *result=(double *) malloc ((array_len-drop_n)*sizeof(double));
@@ -222,6 +302,15 @@ double *drop1d(double *input_array, int array_len, int drop_n)
   }
   return result;
 }
+/**
+ * @brief 
+ * - Drop the first vectors in a matrix and return the rest vectors as a new matrix.
+ * @param d1 
+ * @param d2 
+ * @param input_matrix 
+ * @param drop_n 
+ * @return double** 
+ */
 double **drop2d(int d1,int d2,double **input_matrix,int drop_n)
 {
   double **result=(double **) malloc ((d1-drop_n)*sizeof(double *));
@@ -240,7 +329,16 @@ double **drop2d(int d1,int d2,double **input_matrix,int drop_n)
   }
   return result;
 }
-
+/**
+ * @brief 
+ * - Drop the first n matrix in a cube and return the rest as a new cube.
+ * @param d1 
+ * @param d2 
+ * @param d3 
+ * @param input_cube 
+ * @param drop_n 
+ * @return double*** 
+ */
 double ***drop3d(int d1,int d2,int d3,double ***input_cube, int drop_n)
 {
   double ***result=(double ***) malloc ((d1-drop_n)*sizeof(double **));
@@ -267,7 +365,13 @@ double ***drop3d(int d1,int d2,int d3,double ***input_cube, int drop_n)
   }
   return result;
 }
-//repeat a value n times and store in an array
+/**
+ * @brief 
+ * - Repeat a value n times and store in an array
+ * @param input_value 
+ * @param n_times 
+ * @return double* 
+ */
 double *fanoutn1d(int input_value, int n_times)
 {
   double *result=(double *) malloc ((n_times)*sizeof(double));
@@ -278,6 +382,14 @@ double *fanoutn1d(int input_value, int n_times)
   }
   return result;
 }
+/**
+ * @brief 
+ * - repeat a vector n times and store in a matrix
+ * @param input_array 
+ * @param array_length 
+ * @param n_times 
+ * @return double** 
+ */
 double **fanoutn2d(double *input_array, int array_length, int n_times)
 {
   double **result=(double **) malloc (n_times*sizeof(double *));
@@ -294,6 +406,15 @@ double **fanoutn2d(double *input_array, int array_length, int n_times)
   }
   return result;
 }
+/**
+ * @brief 
+ * - Repeat a matrix n times and store it in a cube.
+ * @param input_matrix 
+ * @param d1 
+ * @param d2 
+ * @param n_times 
+ * @return double*** 
+ */
 double ***fanoutn3d(double **input_matrix, int d1, int d2, int n_times)
 {
   double ***result=(double ***) malloc (n_times*sizeof(double **));
@@ -320,7 +441,15 @@ double ***fanoutn3d(double **input_matrix, int d1, int d2, int n_times)
   }
   return result;
 }
-//farm11
+/**
+ * @brief
+ * - Apply the operation function on a given array.
+ * - The function takes 1 input value at a time. 
+ * @param operation 
+ * @param input_array 
+ * @param array_len 
+ * @return double* 
+ */
 double *farm11_1d(double (*operation)(double), double *input_array, int array_len)
 {
   double *result=(double *) malloc ((array_len)*sizeof(double));
@@ -331,20 +460,44 @@ double *farm11_1d(double (*operation)(double), double *input_array, int array_le
   }
   return result;
 }
-
-double **farm11_2d(double **(*operation)(int,int,double **), int d1,int d2,double **input_matrix)
+/**
+ * @brief 
+ * - Apply the operation function on a given matrix.
+ * - The function takes 1 input value at a time. 
+ * @param operation 
+ * @param d1 
+ * @param d2 
+ * @param input_matrix 
+ * @return double** 
+ */
+double **farm11_2d(double (*operation)(double), int d1,int d2,double **input_matrix)
 {
   double **result=(double **) malloc (d1*sizeof(double));
   for(int i=0;i<d1;i++)
   {
     result[i]=(double *) malloc (d2*sizeof(double));
   }
-
-  result=operation(d1,d2,input_matrix);
+  for(int i=0;i<d1;i++)
+  {
+    for(int j=0;j<d2;j++)
+    {
+      result[i][j]=operation(input_matrix[i][j]);
+    }
+  }
   return result;
 }
-
-//farm21
+/**
+ * @brief  
+ * - Apply the operation function between two given array.
+ * - The function takes 2 input values at a time.
+ * - In order to construct a vector computing function you can farm21 the operation
+ * - you would like to use over numbers. 
+ * @param operation 
+ * @param input_array1 
+ * @param input_array2 
+ * @param array_len 
+ * @return double* 
+ */
 double *farm21_1d(double (*operation)(double,double), double *input_array1, double *input_array2, int array_len)
 {
   double *result=(double *) malloc ((array_len)*sizeof(double));
@@ -354,7 +507,19 @@ double *farm21_1d(double (*operation)(double,double), double *input_array1, doub
   }
   return result;
 }
-
+/**
+ * @brief 
+ * - Apply the operation function between 4 given matrix.
+ * - The function takes 4 input values at a time. 
+ * @param operation 
+ * @param d1 
+ * @param d2 
+ * @param input_matrix1 
+ * @param input_matrix2 
+ * @param input_matrix3 
+ * @param input_matrix4 
+ * @return double** 
+ */
 double **farm41_2d(double (*operation)(double,double,double,double),int d1,int d2,double **input_matrix1,double **input_matrix2,double **input_matrix3,double **input_matrix4)
 {
   double **result=(double **) malloc (d1*sizeof(double*));
@@ -371,7 +536,15 @@ double **farm41_2d(double (*operation)(double,double,double,double),int d1,int d
   }
   return result;
 }
-
+/**
+ * @brief 
+ * - Group the input matrix into nums of vectors.
+ * @param d1 
+ * @param d2 
+ * @param input_matrix 
+ * @param num 
+ * @return double*** 
+ */
 double ***group2d(int d1,int d2,double **input_matrix,int num)
 {
   double ***result=allocate_cube(d1/num,num,d2);
@@ -387,7 +560,16 @@ double ***group2d(int d1,int d2,double **input_matrix,int num)
   }
   return result;
 }
-
+/**
+ * @brief
+ * - Reduce an array to a value.
+ * - Apply the operation between elements inside of the input array.
+ * - Return a value.
+ * @param operation 
+ * @param array_len 
+ * @param input_array 
+ * @return double* 
+ */
 double *reduce1d(double (*operation)(double, double), int array_len, double *input_array)
 {
   double *result=(double *) malloc ((1)*sizeof(double));
@@ -399,6 +581,17 @@ double *reduce1d(double (*operation)(double, double), int array_len, double *inp
   }
   return result;
 }
+/**
+ * @brief 
+ * - Reduce a matrix to a vector.
+ * - Apply the function between vectors regarding to the same position.
+ * - Return a vector.
+ * @param d1 
+ * @param d2 
+ * @param operation 
+ * @param input_matrix 
+ * @return double* 
+ */
 double *reduceV2d( int d1,int d2,double *(*operation)(double*, double*,int d2),double **input_matrix)
 {
   double *result=(double *) malloc (d2*sizeof(double));
@@ -408,7 +601,18 @@ double *reduceV2d( int d1,int d2,double *(*operation)(double*, double*,int d2),d
   }
   return result;
 }
-//reduceVector 3d （对于三维数据cube储存的每一个一维向量操作得到二维矩阵）
+/**
+ * @brief 
+ * - Reduce a cube to a matrix.
+ * - Apply the function between matrix regarding to the same position.
+ * - Return a matrix.
+ * @param d1 
+ * @param d2 
+ * @param d3 
+ * @param operation 
+ * @param input_cube 
+ * @return double** 
+ */
 double **reduceV3d(int d1,int d2,int d3, double *(*operation)(double*, double*,int d3),double ***input_cube)
 {
   double **result=(double **) malloc (d1*sizeof(double *));
@@ -422,7 +626,22 @@ double **reduceV3d(int d1,int d2,int d3, double *(*operation)(double*, double*,i
   }
   return result;
 }
-
+/**
+ * @brief 
+ * - Stencil a matrix.
+ * - Collect the nearest stencil_length vectors and store as a new matrix.
+ * - The dimension of returned matrix is determined by 
+ * @code      
+    int d1 = in_d1 - stencil_length + 1;
+    int d2 = stencil_length;
+    int d3 = in_d2;
+    @endcode 
+ * @param in_d1 
+ * @param in_d2 
+ * @param a 
+ * @param stencil_length 
+ * @return double*** (in_d1-stencil_length+1, stencil_length, in_d2)
+ */
 double ***stencil2d(int in_d1, int in_d2, double **a, int stencil_length)
 {
     int d1 = in_d1 - stencil_length + 1;
@@ -446,45 +665,73 @@ double ***stencil2d(int in_d1, int in_d2, double **a, int stencil_length)
     }
     return result;
 }
-
-//simple example for farm
-//description
-//functions below are the concrete compute operations can be passed to farm
+/**
+ * @brief 
+ * - Add two numbers.
+ * @param input1 
+ * @param input2 
+ * @return double 
+ */
 double add(double input1, double input2)
 {
   return input1+input2;
 }
-
-double add_one(double input)
-{
-  return input+1;
-}
+/**
+ * @brief 
+ * - Add two vectors.
+ * @param inputVector1 
+ * @param inputVector2 
+ * @param len_array 
+ * @return double* 
+ */
 double *addV(double *inputVector1,double *inputVector2,int len_array)
 {
   double *result=farm21_1d(add, inputVector1, inputVector2, len_array);
   return result;
 }
+/**
+ * @brief 
+ * - Find minimum between 2 numbers.
+ * @param num1 
+ * @param num2 
+ * @return double 
+ */
 double minimum(double num1,double num2)
 {
   if(num1<num2) {return num1;}
   else return num2;
 }
-
+/**
+ * @brief 
+ * - find minimum number between two vectors.
+ * @param inputV1 
+ * @param inputV2 
+ * @param d2 
+ * @return double* 
+ */
 double *minimumVec(double *inputV1,double *inputV2 ,int d2)
 {
   double *result=farm21_1d(minimum,inputV1,inputV2, d2);
   return result;
 }
-
+/**
+ * @brief 
+ * - Compute the log2(input/4).
+ * @param input 
+ * @return double 
+ */
 double logBase2_div4(double input)
 {
-//  printf("%f   ",log2(input/4));
   return log2(input/4);
 }
+/**
+ * @brief 
+ * - Divide NoFFT by input.
+ * @param input 
+ * @return double 
+ */
 double div_N(double input)
 {
   return input/NoFFT;
 }
 
-//In order to construct a vector computing function you can farm21 the operation
-//you would like to use over numbers.

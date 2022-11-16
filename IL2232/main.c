@@ -1,73 +1,101 @@
-//
-//  main.c
-//  IL2232
-//
-//  Created by gaogao on 2022-10-11.
-//
-
+/**
+ * @file main.c
+ * @author YuchenGao (yuchenga@kth.se)
+ * @brief This file imports the data cubes 
+ * that are passed to the AESA radar model 
+ * and run some tests over the model in AESA.c file.
+ * @version 0.1
+ * @date 2022-11-16
+ * 
+ * @copyright Copyright (c) 2022
+ * @section Description
+ * Please include the "skeletons.h" and "AESA.h" .
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
 #include "skeletons.h"
 #include "AESA.h"
+/**
+ * @def NoFFT 
+ * The number of Windows.
+ * @def Nob 
+ * The number of range bins.
+ * @def NoB
+ * The number of beams.
+ * @def No2Channel
+ * The number of data channel for real and imagine part in signal.
+ * @def NoChannel 
+ * The number of data channel.
+ */
 #define NoFFT 256//window
 #define Nob 1024 //range
-#define NoB 4//beam
+#define NoB 2//beam
 #define No2Channel 32
 #define NoChannel 16
+/**
+ * @brief The main function read in the .csv file that has already been generated. Apply corresponding AESA computation methods and generate result.
+ * @return int 
+*/
+int main()
+{
+/**
+ * @brief Firstly read from data/.. file.
+ * In the data file, each row contains 256*18<4820 character position.
+ */
+  FILE *fp = fopen("data/processed_Cfar.csv", "r");
+  if (fp == NULL) {
+      fprintf(stderr, "fopen() failed.\n");
+      exit(EXIT_FAILURE);
+  }
+  char row[4820];
+  char *tok;
+  int k=0;
+  double ***data_cube=allocate_cube(NoB, Nob, NoFFT);
+  
+  int cube_idx;
+  int pulse_idx;
+  
+  for(int j=0;j<NoB*Nob;j++)
+  {
+    fgets(row, 4820, fp);
+    tok = strtok(row, ",");
+    /**
+     * @brief Perform how to store the cube: 
+     * @code     
+     * cube_idx=j/Nob;
+       pulse_idx=j%Nob; @endcode
+     * Each cube is 1024 lines and each line has 256 double precision varible.
+     * The current index/Nob is the cube index, and the remainder of index divides Nob is the index for pulse.
+     * @code strtok() @endcode 
+     * This function strips the "," inside data cube and atof turns each string into float.
+     */
+    cube_idx=j/Nob;
+    pulse_idx=j%Nob;
+    while(tok!=NULL)
+    {
+      if(k<NoFFT){data_cube[cube_idx][pulse_idx][k]=atof(tok);}
+      k+=1;
+      tok=strtok(NULL,",");
+    }k=0;
+  }
+  fclose(fp);
+  print_cube(NoB, Nob, NoFFT, data_cube);
+//
+//  double ***result_cube=allocate_cube(NoB, Nob, NoFFT);
+//
+//  for(int i=0;i<NoB;i++)
+//  {
+//    result_cube[i]=fCFAR(Nob,NoFFT,data_cube[i]);
+//  }
+//  print_cube(NoB, Nob, NoFFT, result_cube);
+//  free_cube(NoB, Nob, NoFFT, data_cube);
+//  free_cube(NoB, Nob, NoFFT, result_cube);
+  return 0;
+}
 
-//test for overlap
-//int main(int argc, const char *argv[])
-//{
-////Description :test for the concate3d function
-////  int cube1[1][2][2]={{{1,2},{3,4}}};
-////  int cube2[1][2][2]={{{0,0},{0,0}}};
-////  int ***result=concate3d_cube(1,2,2,cube1,cube2);
-////  for(int i=0;i<2;i++){for(int j=0;j<2;j++){for(int k=0;k<2;k++){printf("%d ",result[i][j][k]);}}}
-//
-////  Description :test for the take3d&drop3d
-//////
-////  int cube1[2][2][2]={{{1,2},{3,4}},{{5,6},{7,8}}};
-////  int ***result=take3d(2, 2, 2, cube1, 1);
-////  print_cube(1, 2, 2, result);
-//  int cube1[2][2][2]={{{1,2},{3,4}},{{5,6},{7,8}}};
-//  int cube2[2][2][2]={{{4,5},{1,8}},{{3,9},{0,4}}};
-//  //用一个allocate函数为每一个输入的cube分配三维指针动态内存。
-//  int ***cube1ptr=allocate_cube_from_cube(2,2,2,cube1);
-//  int ***cube2ptr=allocate_cube_from_cube(2,2,2,cube2);
-//  int initial[1][2][2]={0};
-//  int ***nextState=allocate_cube_from_cube(1,2,2,initial);
-////  print_cube(2, 2, 2, cube1);
-//
-//
-//  //  int ***result=take3d(2, 2, 2, cube1, 1);
-////  print_cube(1, 2, 2, result);
-////  free_cube(1, 2, 2, result);
-//  int ***result1=overlap(2,2,2,cube1ptr,nextState);
-//  printf("output cube:\n ");
-//  print_cube(2, 2, 2, result1);
-//  printf("nextState is set to be: \n");
-//  print_cube(1, 2, 2, nextState);
-//
-//  int ***result2=overlap(2,2,2,cube2ptr,nextState);
-//
-//  printf("output cube:\n ");
-//  print_cube(2, 2, 2, result2);
-//  printf("nextState is set to be: \n");
-//  print_cube(1, 2, 2, nextState);
-//
-//  free_cube(2, 2, 2, cube1ptr);
-//  free_cube(2, 2, 2, cube2ptr);
-//  free_cube(2, 2, 2, result1);
-//  free_cube(2, 2, 2, result2);
-//  free_cube(1, 2, 2, nextState);
-//
-//
-//  return 0;
-//}
-
-////Test for the sequential cubes
+//Test for the sequential cubes
 //int main(int argc, const char *argv[])
 //{
 //  int d1=2;
@@ -114,105 +142,3 @@
 //  free_cube(1, 2, 2, nextState);
 //  return 0;
 //}
-//int main(int argc, const char *argv[])
-//{
-//  double **input_matrix=(double **) malloc (8*sizeof(double *));
-//  for(int i=0;i<8;i++)
-//  {
-//    input_matrix[i]=(double *) malloc (4*sizeof(double));
-//  }
-//  double mat[8][4]={
-//                {0.7,0.3,0.2,0.4},
-//                {0.26,0.48,0.26,0.61},
-//                {0.25,0.52,0.22,0.25},
-//                {0.82,0.73,0.32,0.04},
-//                {0.42,10.33,2.82,0.14},
-//                {0.47,0.14,0.83,0.36},
-//                {0.2,0.8,0.47,0.28},
-//                {0.67,0.5,0.1,0.2}};
-//  for(int i=0;i<8;i++)
-//  {
-//    for(int j=0;j<4;j++)
-//    {
-//      input_matrix[i][j]=mat[i][j];
-//    }
-//  }
-////  test for arithmean
-////  double *result=arithmean(4,4,input_matrix);
-////  print_array(result,4);
-////  double **arithm=(double **) malloc (3*sizeof(double *));
-////  for(int i=0;i<5;i++)
-////  {
-////    arithm[i]=(double *) malloc (4*sizeof(double));
-////  }
-////  double ***neighbors=stencil2d(8, 4, input_matrix, 4);
-////  for(int i=0;i<5;i++)
-////  {
-////    arithm[i]=arithmean(4, 4, neighbors[i]);
-////    print_array(arithm[i], 4);
-////    printf("\n ");
-////  }
-//
-//  double **result=fCFAR(8, 4, input_matrix);
-//  for(int i=0;i<8;i++)
-//  {
-//    print_array(result[i], 4);
-//    printf("\n ");
-//  }
-//  free_matrix(8,4, result);
-//  free_matrix(8,4,input_matrix);
-//  return 0;
-//}
-
-int main()
-{
-  FILE *fp = fopen("data/processed_Cfar.csv", "r");
-  if (fp == NULL) {
-      fprintf(stderr, "fopen() failed.\n");
-      exit(EXIT_FAILURE);
-  }
-
-  char row[4820];
-  char *tok;
-  int k=0;
-  double ***data_cube=allocate_cube(NoB, Nob, NoFFT);
-  
-  int cube_idx;
-  int pulse_idx;
-  
-  for(int j=0;j<NoB*Nob;j++)
-  {
-    fgets(row, 4820, fp);
-    tok = strtok(row, ",");
-//      printf("%s\n",tok);
-    cube_idx=j/Nob;
-    pulse_idx=j%Nob;
-    data_cube[cube_idx][pulse_idx][0]=atof(tok);
-//    printf("%d   ",cube_idx);
-//   // printf(" %d   ",pulse_idx);
-    while(tok!=NULL)
-    {
-      k+=1;
-      if(k<NoFFT){data_cube[cube_idx][pulse_idx][k]=atof(tok);}
-      tok=strtok(NULL,",");
-      //printf("%s\n", tok);
-    }k=0;
-  }
-  fclose(fp);
- print_cube(NoB, Nob, NoFFT, data_cube);
-//  double **result=fCFAR(Nob,NoFFT,data_cube[0]);
-//  double ***result_cube=allocate_cube(NoB, Nob, NoFFT);
-//
-//  for(int i=0;i<NoB;i++)
-//  {
-//    result_cube[i]=fCFAR(Nob,NoFFT,data_cube[i]);
-//  }
-//  print_cube(NoB, Nob, NoFFT, result_cube);
-//  print_matrix(Nob, NoFFT, result);
-//  free_matrix(Nob, NoFFT, result);
-  free_cube(NoB, Nob, NoFFT, data_cube);
-//  free_cube(NoB, Nob, NoFFT, result_cube);
-  
-  return 0;
-}
-
