@@ -100,6 +100,9 @@ $(document).ready(function(){initNavTree('skeletons_8h.html',''); initResizable(
   <div class="headertitle"><div class="title">skeletons.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>REMIND: ALL THE SKELETONS FUNCTION AUTOMATICALLY ALLOCATES DYNAMIC SPACE MUST BE RELEASED.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;math.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -107,7 +110,7 @@ Include dependency graph for skeletons.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="skeletons_8h__incl.png" border="0" usemap="#askeletons_8h" alt=""/></div>
 <map name="askeletons_8h" id="askeletons_8h">
-<area shape="rect" title=" " alt="" coords="34,5,123,31"/>
+<area shape="rect" title="REMIND: ALL THE SKELETONS FUNCTION AUTOMATICALLY ALLOCATES DYNAMIC SPACE MUST BE RELEASED." alt="" coords="34,5,123,31"/>
 <area shape="rect" title=" " alt="" coords="5,79,67,104"/>
 <area shape="rect" title=" " alt="" coords="91,79,154,104"/>
 </map>
@@ -117,9 +120,9 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="skeletons_8h__dep__incl.png" border="0" usemap="#askeletons_8hdep" alt=""/></div>
 <map name="askeletons_8hdep" id="askeletons_8hdep">
-<area shape="rect" title=" " alt="" coords="54,5,143,31"/>
-<area shape="rect" href="_a_e_s_a_8c.html" title="In AESA computation blocks, the assigned useless dynamic spaces need to be released...." alt="" coords="5,152,75,177"/>
-<area shape="rect" href="_a_e_s_a_8h.html" title=" " alt="" coords="64,79,133,104"/>
+<area shape="rect" title="REMIND: ALL THE SKELETONS FUNCTION AUTOMATICALLY ALLOCATES DYNAMIC SPACE MUST BE RELEASED." alt="" coords="54,5,143,31"/>
+<area shape="rect" href="_a_e_s_a_8c.html" title="The AESA radar use case. Composed of CFAR and CT. Also their sub systems." alt="" coords="5,152,75,177"/>
+<area shape="rect" href="_a_e_s_a_8h.html" title="REMIND: ALL THE SKELETONS FUNCTION AUTOMATICALLY ALLOCATES DYNAMIC SPACE MUST BE RELEASED." alt="" coords="64,79,133,104"/>
 <area shape="rect" href="main_8c.html" title="This file imports the data cubes that are passed to the AESA radar model and run some tests over the ..." alt="" coords="125,152,187,177"/>
 </map>
 </div>
@@ -132,6 +135,8 @@ Functions</h2></td></tr>
 <tr class="separator:a2d5129e20dc1b785a7fc17fb56e184a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2d0a4c4b2db37865ed31eee502ccd5e"><td class="memItemLeft" align="right" valign="top">double ***&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#ae2d0a4c4b2db37865ed31eee502ccd5e">allocate_cube_from_cube</a> (int d1, int d2, int d3, double cube[d1][d2][d3])</td></tr>
 <tr class="separator:ae2d0a4c4b2db37865ed31eee502ccd5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af98b87866cc7ff49f1783594468c1c1e"><td class="memItemLeft" align="right" valign="top">double **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#af98b87866cc7ff49f1783594468c1c1e">allocate_mat</a> (int d1, int d2)</td></tr>
+<tr class="separator:af98b87866cc7ff49f1783594468c1c1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35ff3529d3ab086c74c8d574c888fb2b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#a35ff3529d3ab086c74c8d574c888fb2b">free_matrix</a> (int d1, int d2, double **matrix)</td></tr>
 <tr class="separator:a35ff3529d3ab086c74c8d574c888fb2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8103684bce231ff90661db3c678f08cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#a8103684bce231ff90661db3c678f08cf">free_cube</a> (int d1, int d2, int d3, double ***cube)</td></tr>
@@ -158,16 +163,16 @@ Functions</h2></td></tr>
 <tr class="separator:aa6c741f143c6642f5abb7a2376adb223"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ada636e57bdecb9493132d5212c72ea"><td class="memItemLeft" align="right" valign="top">double ***&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#a9ada636e57bdecb9493132d5212c72ea">drop3d</a> (int d1, int d2, int d3, double ***input_cube, int drop_n)</td></tr>
 <tr class="separator:a9ada636e57bdecb9493132d5212c72ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc78bc535ec61a63ef40e09947c05ea2"><td class="memItemLeft" align="right" valign="top">double *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#abc78bc535ec61a63ef40e09947c05ea2">fanoutn1d</a> (int input_value, int n)</td></tr>
-<tr class="separator:abc78bc535ec61a63ef40e09947c05ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af92ff4a864eaca495ffc4b9ceeb40ae7"><td class="memItemLeft" align="right" valign="top">double *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#af92ff4a864eaca495ffc4b9ceeb40ae7">fanoutn1d</a> (double input_value, int n)</td></tr>
+<tr class="separator:af92ff4a864eaca495ffc4b9ceeb40ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add8c533f1341f7df206be5806b14b055"><td class="memItemLeft" align="right" valign="top">double **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#add8c533f1341f7df206be5806b14b055">fanoutn2d</a> (double *input_array, int array_length, int n_times)</td></tr>
 <tr class="separator:add8c533f1341f7df206be5806b14b055"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ff81f89cb2cb8f76a37620961be516b"><td class="memItemLeft" align="right" valign="top">double ***&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#a2ff81f89cb2cb8f76a37620961be516b">fanoutn3d</a> (double **input_matrix, int d1, int d2, int n_times)</td></tr>
 <tr class="separator:a2ff81f89cb2cb8f76a37620961be516b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed729971cf2417be3fe41f8e05c301fa"><td class="memItemLeft" align="right" valign="top">double *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#aed729971cf2417be3fe41f8e05c301fa">farm11_1d</a> (double(*operation)(double), double *input_array, int array_len)</td></tr>
 <tr class="separator:aed729971cf2417be3fe41f8e05c301fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04e4ed1e8b41d04582b2e64f260794a6"><td class="memItemLeft" align="right" valign="top">double **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#a04e4ed1e8b41d04582b2e64f260794a6">farm11_2d</a> (double *(*operation)(int, int, double **), int d1, int d2, double **input_matrix)</td></tr>
-<tr class="separator:a04e4ed1e8b41d04582b2e64f260794a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaa59220287d1581f27dcb071524771a"><td class="memItemLeft" align="right" valign="top">double **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#aaaa59220287d1581f27dcb071524771a">farm11_2d</a> (double(*operation)(double), int d1, int d2, double **input_matrix)</td></tr>
+<tr class="separator:aaaa59220287d1581f27dcb071524771a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba8934532f99a424c9afc0263b8fd85f"><td class="memItemLeft" align="right" valign="top">double *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#aba8934532f99a424c9afc0263b8fd85f">farm21_1d</a> (double(*operation)(double, double), double *input_array1, double *input_array2, int array_len)</td></tr>
 <tr class="memdesc:aba8934532f99a424c9afc0263b8fd85f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><br  />
   <a href="skeletons_8h.html#aba8934532f99a424c9afc0263b8fd85f">More...</a><br /></td></tr>
@@ -198,8 +203,15 @@ Functions</h2></td></tr>
 <tr class="separator:a52b119c2ef2bef6674817557d19ac0bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32be92e37fb1c266bed6f54e8e02db87"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#a32be92e37fb1c266bed6f54e8e02db87">div_N</a> (double input)</td></tr>
 <tr class="separator:a32be92e37fb1c266bed6f54e8e02db87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5134cf54d23c5383ea3fb55818bc2a9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="skeletons_8h.html#ab5134cf54d23c5383ea3fb55818bc2a9">logBase2</a> (double input)</td></tr>
+<tr class="separator:ab5134cf54d23c5383ea3fb55818bc2a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >REMIND: ALL THE SKELETONS FUNCTION AUTOMATICALLY ALLOCATES DYNAMIC SPACE MUST BE RELEASED. </p>
+<dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2022-11-18 </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2022 </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a95319c31b1b32e219d858c43c9eea18d" name="a95319c31b1b32e219d858c43c9eea18d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a95319c31b1b32e219d858c43c9eea18d">&#9670;&#160;</a></span>add()</h2>
 
@@ -228,8 +240,8 @@ Functions</h2></td></tr>
 <ul>
 <li>Add two numbers. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">input1</td><td></td></tr>
-    <tr><td class="paramname">input2</td><td></td></tr>
+    <tr><td class="paramname">input1</td><td>The first input. </td></tr>
+    <tr><td class="paramname">input2</td><td>The second input. </td></tr>
   </table>
   </dd>
 </dl>
@@ -291,9 +303,9 @@ Functions</h2></td></tr>
 <ul>
 <li>Add two vectors. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">inputVector1</td><td></td></tr>
-    <tr><td class="paramname">inputVector2</td><td></td></tr>
-    <tr><td class="paramname">len_array</td><td></td></tr>
+    <tr><td class="paramname">inputVector1</td><td>The first input vector. </td></tr>
+    <tr><td class="paramname">inputVector2</td><td>The second input vector. </td></tr>
+    <tr><td class="paramname">len_array</td><td>The length of array. </td></tr>
   </table>
   </dd>
 </dl>
@@ -337,9 +349,9 @@ Functions</h2></td></tr>
 <ul>
 <li>Allocate_cube allocates (d1,d2,d3) space for elements <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">d1</td><td></td></tr>
-    <tr><td class="paramname">d2</td><td></td></tr>
-    <tr><td class="paramname">d3</td><td></td></tr>
+    <tr><td class="paramname">d1</td><td>First dimension of cube. </td></tr>
+    <tr><td class="paramname">d2</td><td>Second dimension of cube. </td></tr>
+    <tr><td class="paramname">d3</td><td>Third dimension of cube. </td></tr>
   </table>
   </dd>
 </dl>
@@ -389,14 +401,53 @@ Functions</h2></td></tr>
 <ul>
 <li>Deep copy operation for input data cube. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">d1</td><td></td></tr>
-    <tr><td class="paramname">d2</td><td></td></tr>
-    <tr><td class="paramname">d3</td><td></td></tr>
-    <tr><td class="paramname">cube</td><td></td></tr>
+    <tr><td class="paramname">d1</td><td>The first dimension of the input cube. </td></tr>
+    <tr><td class="paramname">d2</td><td>The second dimension of the input cube. </td></tr>
+    <tr><td class="paramname">d3</td><td>The third dimension of the input cube. </td></tr>
+    <tr><td class="paramname">cube</td><td>The input cube. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>double*** </dd></dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="af98b87866cc7ff49f1783594468c1c1e" name="af98b87866cc7ff49f1783594468c1c1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af98b87866cc7ff49f1783594468c1c1e">&#9670;&#160;</a></span>allocate_mat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double ** allocate_mat </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>d1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>d2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<ul>
+<li>Allocates (d1,d2) matrix space for elements <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d1</td><td>First dimension of cube. </td></tr>
+    <tr><td class="paramname">d2</td><td>Second dimension of cube. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double** </dd></dl>
 </li>
 </ul>
 
@@ -436,9 +487,9 @@ Functions</h2></td></tr>
 <ul>
 <li>Concate 2 arrays with the same length and return an array with 2*length. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">array1</td><td></td></tr>
-    <tr><td class="paramname">array2</td><td></td></tr>
-    <tr><td class="paramname">array_len</td><td></td></tr>
+    <tr><td class="paramname">array1</td><td>The first array. </td></tr>
+    <tr><td class="paramname">array2</td><td>The second array. </td></tr>
+    <tr><td class="paramname">array_len</td><td>The length of array. </td></tr>
   </table>
   </dd>
 </dl>
@@ -495,11 +546,11 @@ Functions</h2></td></tr>
 <li>Concate 2 matrix with first dimenson is equal to d1_mat1 and d1_mat2.</li>
 <li>Generate a matrix with size of (d1_mat1+d1_mat2, d2) <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">d1_mat1</td><td></td></tr>
-    <tr><td class="paramname">d1_mat2</td><td></td></tr>
-    <tr><td class="paramname">d2</td><td></td></tr>
-    <tr><td class="paramname">input_matrix1</td><td></td></tr>
-    <tr><td class="paramname">input_matrix2</td><td></td></tr>
+    <tr><td class="paramname">d1_mat1</td><td>The first dimension of the first matrix. </td></tr>
+    <tr><td class="paramname">d1_mat2</td><td>The first dimension of the second matrix. </td></tr>
+    <tr><td class="paramname">d2</td><td>The second dimension of the matrices. </td></tr>
+    <tr><td class="paramname">input_matrix1</td><td>The first matrix. </td></tr>
+    <tr><td class="paramname">input_matrix2</td><td>The second matrix. </td></tr>
   </table>
   </dd>
 </dl>
@@ -555,11 +606,11 @@ Functions</h2></td></tr>
 <ul>
 <li>Concate 2 cubes with the same dimensionality (d1,d2,d3) <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">d1</td><td></td></tr>
-    <tr><td class="paramname">d2</td><td></td></tr>
-    <tr><td class="paramname">d3</td><td></td></tr>
-    <tr><td class="paramname">array1</td><td></td></tr>
-    <tr><td class="paramname">array2</td><td></td></tr>
+    <tr><td class="paramname">d1</td><td>The first dimension of the cube. </td></tr>
+    <tr><td class="paramname">d2</td><td>The second dimension of the cube. </td></tr>
+    <tr><td class="paramname">d3</td><td>The third dimension of the cube. </td></tr>
+    <tr><td class="paramname">array1</td><td>The first cube. </td></tr>
+    <tr><td class="paramname">array2</td><td>The second cube. </td></tr>
   </table>
   </dd>
 </dl>
@@ -587,7 +638,7 @@ Functions</h2></td></tr>
 <ul>
 <li>Divide NoFFT by input. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">input</td><td></td></tr>
+    <tr><td class="paramname">input</td><td>Input value. </td></tr>
   </table>
   </dd>
 </dl>
@@ -631,9 +682,9 @@ Functions</h2></td></tr>
 <ul>
 <li>Drop the first n elements in an array and return the rest. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">input_array</td><td></td></tr>
-    <tr><td class="paramname">array_len</td><td></td></tr>
-    <tr><td class="paramname">drop_n</td><td></td></tr>
+    <tr><td class="paramname">input_array</td><td>The original array. </td></tr>
+    <tr><td class="paramname">array_len</td><td>The length of input array. </td></tr>
+    <tr><td class="paramname">drop_n</td><td>Parameter for droping n elements. </td></tr>
   </table>
   </dd>
 </dl>
@@ -683,10 +734,10 @@ Functions</h2></td></tr>
 <ul>
 <li>Drop the first vectors in a matrix and return the rest vectors as a new matrix. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">d1</td><td></td></tr>
-    <tr><td class="paramname">d2</td><td></td></tr>
-    <tr><td class="paramname">input_matrix</td><td></td></tr>
-    <tr><td class="paramname">drop_n</td><td></td></tr>
+    <tr><td class="paramname">d1</td><td>The first dimension of matrix. </td></tr>
+    <tr><td class="paramname">d2</td><td>The second dimension of matrix. </td></tr>
+    <tr><td class="paramname">input_matrix</td><td>The original matrix. </td></tr>
+    <tr><td class="paramname">drop_n</td><td>Parameter for droping n arrays. </td></tr>
   </table>
   </dd>
 </dl>
@@ -742,11 +793,11 @@ Functions</h2></td></tr>
 <ul>
 <li>Drop the first n matrix in a cube and return the rest as a new cube. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">d1</td><td></td></tr>
-    <tr><td class="paramname">d2</td><td></td></tr>
-    <tr><td class="paramname">d3</td><td></td></tr>
-    <tr><td class="paramname">input_cube</td><td></td></tr>
-    <tr><td class="paramname">drop_n</td><td></td></tr>
+    <tr><td class="paramname">d1</td><td>The first dimension of cube. </td></tr>
+    <tr><td class="paramname">d2</td><td>The second dimension of cube </td></tr>
+    <tr><td class="paramname">d3</td><td>The third dimension of cube. </td></tr>
+    <tr><td class="paramname">input_cube</td><td>The original cube. </td></tr>
+    <tr><td class="paramname">drop_n</td><td>Parameter for droping n matrices. </td></tr>
   </table>
   </dd>
 </dl>
@@ -756,8 +807,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="abc78bc535ec61a63ef40e09947c05ea2" name="abc78bc535ec61a63ef40e09947c05ea2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc78bc535ec61a63ef40e09947c05ea2">&#9670;&#160;</a></span>fanoutn1d()</h2>
+<a id="af92ff4a864eaca495ffc4b9ceeb40ae7" name="af92ff4a864eaca495ffc4b9ceeb40ae7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af92ff4a864eaca495ffc4b9ceeb40ae7">&#9670;&#160;</a></span>fanoutn1d()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -765,7 +816,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">double * fanoutn1d </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>input_value</em>, </td>
         </tr>
         <tr>
@@ -784,8 +835,8 @@ Functions</h2></td></tr>
 <ul>
 <li>Repeat a value n times and store in an array <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">input_value</td><td></td></tr>
-    <tr><td class="paramname">n_times</td><td></td></tr>
+    <tr><td class="paramname">input_value</td><td>The valued desired to be repeated. </td></tr>
+    <tr><td class="paramname">n_times</td><td>The parameter for repeating times. </td></tr>
   </table>
   </dd>
 </dl>
@@ -829,9 +880,9 @@ Functions</h2></td></tr>
 <ul>
 <li>repeat a vector n times and store in a matrix <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">input_array</td><td></td></tr>
-    <tr><td class="paramname">array_length</td><td></td></tr>
-    <tr><td class="paramname">n_times</td><td></td></tr>
+    <tr><td class="paramname">input_array</td><td>The input array desired to be repeated. </td></tr>
+    <tr><td class="paramname">array_length</td><td>The length of input array. </td></tr>
+    <tr><td class="paramname">n_times</td><td>The parameter for repeating times. </td></tr>
   </table>
   </dd>
 </dl>
@@ -881,10 +932,10 @@ Functions</h2></td></tr>
 <ul>
 <li>Repeat a matrix n times and store it in a cube. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">input_matrix</td><td></td></tr>
-    <tr><td class="paramname">d1</td><td></td></tr>
-    <tr><td class="paramname">d2</td><td></td></tr>
-    <tr><td class="paramname">n_times</td><td></td></tr>
+    <tr><td class="paramname">input_matrix</td><td>The matrix desired to be repeated. </td></tr>
+    <tr><td class="paramname">d1</td><td>The firsted dimension of matrix. </td></tr>
+    <tr><td class="paramname">d2</td><td>The second dimension of matrix. </td></tr>
+    <tr><td class="paramname">n_times</td><td>The parameter for repearting times. </td></tr>
   </table>
   </dd>
 </dl>
@@ -929,9 +980,9 @@ Functions</h2></td></tr>
 <li>Apply the operation function on a given array.</li>
 <li>The function takes 1 input value at a time. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">operation</td><td></td></tr>
-    <tr><td class="paramname">input_array</td><td></td></tr>
-    <tr><td class="paramname">array_len</td><td></td></tr>
+    <tr><td class="paramname">operation</td><td>The function applied on array. </td></tr>
+    <tr><td class="paramname">input_array</td><td>The original array. </td></tr>
+    <tr><td class="paramname">array_len</td><td>The length of array. </td></tr>
   </table>
   </dd>
 </dl>
@@ -941,8 +992,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a04e4ed1e8b41d04582b2e64f260794a6" name="a04e4ed1e8b41d04582b2e64f260794a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04e4ed1e8b41d04582b2e64f260794a6">&#9670;&#160;</a></span>farm11_2d()</h2>
+<a id="aaaa59220287d1581f27dcb071524771a" name="aaaa59220287d1581f27dcb071524771a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaaa59220287d1581f27dcb071524771a">&#9670;&#160;</a></span>farm11_2d()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -950,7 +1001,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">double ** farm11_2d </td>
           <td>(</td>
-          <td class="paramtype">double *(*)(int, int, double **)&#160;</td>
+          <td class="paramtype">double(*)(double)&#160;</td>
           <td class="paramname"><em>operation</em>, </td>
         </tr>
         <tr>
@@ -978,6 +1029,20 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<ul>
+<li>Apply the operation function on a given matrix.</li>
+<li>The function takes 1 input value at a time. <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">operation</td><td>The funuction applied on matrix. </td></tr>
+    <tr><td class="paramname">d1</td><td>The first dimension of matrix. </td></tr>
+    <tr><td class="paramname">d2</td><td>The second dimension of matrix. </td></tr>
+    <tr><td class="paramname">input_matrix</td><td>The original matrix. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double** </dd></dl>
+</li>
+</ul>
 
 </div>
 </div>
@@ -1027,10 +1092,10 @@ Functions</h2></td></tr>
 <li>In order to construct a vector computing function you can farm21 the operation</li>
 <li>you would like to use over numbers. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">operation</td><td></td></tr>
-    <tr><td class="paramname">input_array1</td><td></td></tr>
-    <tr><td class="paramname">input_array2</td><td></td></tr>
-    <tr><td class="paramname">array_len</td><td></td></tr>
+    <tr><td class="paramname">operation</td><td>The operation applied on the arrays. </td></tr>
+    <tr><td class="paramname">input_array1</td><td>The first array. </td></tr>
+    <tr><td class="paramname">input_array2</td><td>The second array. </td></tr>
+    <tr><td class="paramname">array_len</td><td>The length of array. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1099,13 +1164,13 @@ Functions</h2></td></tr>
 <li>Apply the operation function between 4 given matrix.</li>
 <li>The function takes 4 input values at a time. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">operation</td><td></td></tr>
-    <tr><td class="paramname">d1</td><td></td></tr>
-    <tr><td class="paramname">d2</td><td></td></tr>
-    <tr><td class="paramname">input_matrix1</td><td></td></tr>
-    <tr><td class="paramname">input_matrix2</td><td></td></tr>
-    <tr><td class="paramname">input_matrix3</td><td></td></tr>
-    <tr><td class="paramname">input_matrix4</td><td></td></tr>
+    <tr><td class="paramname">operation</td><td>The function applied on four matrices with same size. </td></tr>
+    <tr><td class="paramname">d1</td><td>The first dimension of matrix. </td></tr>
+    <tr><td class="paramname">d2</td><td>The second dimension of matrix. </td></tr>
+    <tr><td class="paramname">input_matrix1</td><td>The first matrix. </td></tr>
+    <tr><td class="paramname">input_matrix2</td><td>The second matrix. </td></tr>
+    <tr><td class="paramname">input_matrix3</td><td>The third matrix. </td></tr>
+    <tr><td class="paramname">input_matrix4</td><td>The fourth matrix. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1153,17 +1218,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <ul>
-<li>free a cube</li>
-</ul>
-<dl class="params"><dt>Parameters</dt><dd>
+<li>free a cube <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">d1</td><td></td></tr>
-    <tr><td class="paramname">d2</td><td></td></tr>
-    <tr><td class="paramname">d3</td><td></td></tr>
-    <tr><td class="paramname">cube</td><td></td></tr>
+    <tr><td class="paramname">d1</td><td>The first dimension of cube. </td></tr>
+    <tr><td class="paramname">d2</td><td>The second dimension of cube. </td></tr>
+    <tr><td class="paramname">d3</td><td>The third dimension of cube. </td></tr>
+    <tr><td class="paramname">cube</td><td>The cube itself. </td></tr>
   </table>
   </dd>
 </dl>
+</li>
+</ul>
 
 </div>
 </div>
@@ -1199,16 +1264,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <ul>
-<li>free a matrix</li>
-</ul>
-<dl class="params"><dt>Parameters</dt><dd>
+<li>free a matrix <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">d1</td><td></td></tr>
-    <tr><td class="paramname">d2</td><td></td></tr>
-    <tr><td class="paramname">matrix</td><td></td></tr>
+    <tr><td class="paramname">d1</td><td>The first dimension of matrix. </td></tr>
+    <tr><td class="paramname">d2</td><td>The second dimension of matrix. </td></tr>
+    <tr><td class="paramname">matrix</td><td>The input matrix. </td></tr>
   </table>
   </dd>
 </dl>
+</li>
+</ul>
 
 </div>
 </div>
@@ -1252,14 +1317,42 @@ Functions</h2></td></tr>
 <ul>
 <li>Group the input matrix into nums of vectors. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">d1</td><td></td></tr>
-    <tr><td class="paramname">d2</td><td></td></tr>
-    <tr><td class="paramname">input_matrix</td><td></td></tr>
-    <tr><td class="paramname">num</td><td></td></tr>
+    <tr><td class="paramname">d1</td><td>The first dimension of matrix. </td></tr>
+    <tr><td class="paramname">d2</td><td>The second dimension of matrix. </td></tr>
+    <tr><td class="paramname">input_matrix</td><td>The input matrix. </td></tr>
+    <tr><td class="paramname">num</td><td>The parameter for each sub group. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>double*** </dd></dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="ab5134cf54d23c5383ea3fb55818bc2a9" name="ab5134cf54d23c5383ea3fb55818bc2a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5134cf54d23c5383ea3fb55818bc2a9">&#9670;&#160;</a></span>logBase2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double logBase2 </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>input</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<ul>
+<li>Log base 2 function. <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td>Input value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double </dd></dl>
 </li>
 </ul>
 
@@ -1283,7 +1376,7 @@ Functions</h2></td></tr>
 <ul>
 <li>Compute the log2(input/4). <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">input</td><td></td></tr>
+    <tr><td class="paramname">input</td><td>Input value. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1321,8 +1414,8 @@ Functions</h2></td></tr>
 <ul>
 <li>Find minimum between 2 numbers. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">num1</td><td></td></tr>
-    <tr><td class="paramname">num2</td><td></td></tr>
+    <tr><td class="paramname">num1</td><td>The first input. </td></tr>
+    <tr><td class="paramname">num2</td><td>The second input. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1366,9 +1459,9 @@ Functions</h2></td></tr>
 <ul>
 <li>find minimum number between two vectors. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">inputV1</td><td></td></tr>
-    <tr><td class="paramname">inputV2</td><td></td></tr>
-    <tr><td class="paramname">d2</td><td></td></tr>
+    <tr><td class="paramname">inputV1</td><td>The first input vector. </td></tr>
+    <tr><td class="paramname">inputV2</td><td>The second input vector. </td></tr>
+    <tr><td class="paramname">d2</td><td>The length of the vector. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1516,9 +1609,9 @@ Functions</h2></td></tr>
 <li>Apply the operation between elements inside of the input array.</li>
 <li>Return a value. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">operation</td><td></td></tr>
-    <tr><td class="paramname">array_len</td><td></td></tr>
-    <tr><td class="paramname">input_array</td><td></td></tr>
+    <tr><td class="paramname">operation</td><td>The function applied on the input array. </td></tr>
+    <tr><td class="paramname">array_len</td><td>The length of the input array. </td></tr>
+    <tr><td class="paramname">input_array</td><td>The original array. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1570,10 +1663,10 @@ Functions</h2></td></tr>
 <li>Apply the function between vectors regarding to the same position.</li>
 <li>Return a vector. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">d1</td><td></td></tr>
-    <tr><td class="paramname">d2</td><td></td></tr>
-    <tr><td class="paramname">operation</td><td></td></tr>
-    <tr><td class="paramname">input_matrix</td><td></td></tr>
+    <tr><td class="paramname">d1</td><td>The first dimension of the matrix. </td></tr>
+    <tr><td class="paramname">d2</td><td>The second dimension of the matrix. </td></tr>
+    <tr><td class="paramname">operation</td><td>The function applied on the matrix. </td></tr>
+    <tr><td class="paramname">input_matrix</td><td>The input matrix. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1674,10 +1767,10 @@ Functions</h2></td></tr>
 <div class="line"><span class="keywordtype">int</span> d3 = in_d2;</div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">in_d1</td><td></td></tr>
-    <tr><td class="paramname">in_d2</td><td></td></tr>
-    <tr><td class="paramname">a</td><td></td></tr>
-    <tr><td class="paramname">stencil_length</td><td></td></tr>
+    <tr><td class="paramname">in_d1</td><td>The first dimension of original matrix. </td></tr>
+    <tr><td class="paramname">in_d2</td><td>The second dimension of original matrix. </td></tr>
+    <tr><td class="paramname">a</td><td>The original matrix. </td></tr>
+    <tr><td class="paramname">stencil_length</td><td>The stencil times desired. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1715,8 +1808,8 @@ Functions</h2></td></tr>
 <ul>
 <li>Take first n elements from the input array and return them. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">input_array</td><td></td></tr>
-    <tr><td class="paramname">take_n</td><td></td></tr>
+    <tr><td class="paramname">input_array</td><td>The original array. </td></tr>
+    <tr><td class="paramname">take_n</td><td>Parameter for taking n elements. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1772,11 +1865,11 @@ Functions</h2></td></tr>
 <ul>
 <li>Take the first n matrix from cube and return them as a new cube. <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">d1</td><td></td></tr>
-    <tr><td class="paramname">d2</td><td></td></tr>
-    <tr><td class="paramname">d3</td><td></td></tr>
-    <tr><td class="paramname">input_cube</td><td></td></tr>
-    <tr><td class="paramname">take_n</td><td></td></tr>
+    <tr><td class="paramname">d1</td><td>The first dimension of cube. </td></tr>
+    <tr><td class="paramname">d2</td><td>The second dimension of cube. </td></tr>
+    <tr><td class="paramname">d3</td><td>The third dimension of cube. </td></tr>
+    <tr><td class="paramname">input_cube</td><td>The original cube. </td></tr>
+    <tr><td class="paramname">take_n</td><td>Parameter for taking n matrices. </td></tr>
   </table>
   </dd>
 </dl>

@@ -1,7 +1,8 @@
 /**
  * @file skeletons.c
  * @author Yuchen
- * @brief 
+ * @brief The skeleton functions that are used in the foundation layer to contruct system.
+ * REMIND: ALL THE SKELETONS FUNCTION AUTOMATICALLY ALLOCATES DYNAMIC SPACE MUST BE RELEASED.
  * @version 0.1
  * @date 2022-11-16
  * 
@@ -15,9 +16,9 @@
 /**
  * @brief 
  * - Allocate_cube allocates (d1,d2,d3) space for elements
- * @param d1 
- * @param d2 
- * @param d3 
+ * @param d1 First dimension of cube.
+ * @param d2  Second dimension of cube.
+ * @param d3  Third dimension of cube.
  * @return double*** 
  */
 double ***allocate_cube(int d1,int d2,int d3)
@@ -37,12 +38,28 @@ double ***allocate_cube(int d1,int d2,int d3)
   return result;
 }
 /**
+ * @brief
+ * -  Allocates (d1,d2) matrix space for elements
+ * @param d1 First dimension of cube.
+ * @param d2  Second dimension of cube.
+ * @return double**
+ */
+double **allocate_mat(int d1,int d2)
+{
+  double **result=(double **) malloc (d1*sizeof(double *));
+  for(int i=0;i<d1;i++)
+  {
+    result[i]=(double *) malloc (d2*sizeof(double));
+  }
+  return result;
+}
+/**
  * @brief 
  * - Deep copy operation for input data cube.
- * @param d1 
- * @param d2 
- * @param d3 
- * @param cube 
+ * @param d1 The first dimension of the input cube.
+ * @param d2 The second dimension of the input cube.
+ * @param d3 The third dimension of the input cube.
+ * @param cube The input cube.
  * @return double*** 
  */
 double ***allocate_cube_from_cube(int d1,int d2,int d3,double cube[d1][d2][d3])
@@ -74,10 +91,9 @@ double ***allocate_cube_from_cube(int d1,int d2,int d3,double cube[d1][d2][d3])
 /**
  * @brief 
  * - free a matrix
- * 
- * @param d1 
- * @param d2 
- * @param matrix 
+ * @param d1 The first dimension of matrix.
+ * @param d2 The second dimension of matrix.
+ * @param matrix The input matrix.
  */
 void free_matrix(int d1,int d2,double **matrix)
 {
@@ -88,17 +104,14 @@ void free_matrix(int d1,int d2,double **matrix)
   }
   free(matrix);
   matrix=NULL;
-  printf("释放一个矩阵\n");
-
 }
 /**
  * @brief 
  * - free a cube
- * 
- * @param d1 
- * @param d2 
- * @param d3 
- * @param cube 
+ * @param d1 The first dimension of cube.
+ * @param d2 The second dimension of cube.
+ * @param d3 The third dimension of cube.
+ * @param cube The cube itself.
  */
 void free_cube(int d1,int d2,int d3,double ***cube)
 {
@@ -112,8 +125,6 @@ void free_cube(int d1,int d2,int d3,double ***cube)
   }
   free(cube);
   cube=NULL;
-  printf("释放一个数据块\n");
-
 }
 void print_array(double *array, int length)
 {
@@ -141,16 +152,15 @@ void print_cube(int d1,int d2,int d3,double ***cube)
           }
         printf("\n");
       }
-    printf("\n");
   }
 }
 
 /**
  * @brief 
  * - Concate 2 arrays with the same length and return an array with 2*length.
- * @param array1 
- * @param array2 
- * @param array_len 
+ * @param array1 The first array.
+ * @param array2 The second array.
+ * @param array_len The length of array.
  * @return double* 
  */
 double *concate1d(double *array1, double *array2, int array_len)
@@ -168,11 +178,11 @@ double *concate1d(double *array1, double *array2, int array_len)
  * @brief
  * - Concate 2 matrix with first dimenson is equal to d1_mat1 and d1_mat2. 
  * - Generate a matrix with size of (d1_mat1+d1_mat2, d2)
- * @param d1_mat1 
- * @param d1_mat2 
- * @param d2 
- * @param input_matrix1 
- * @param input_matrix2 
+ * @param d1_mat1 The first dimension of the first matrix.
+ * @param d1_mat2 The first dimension of the second matrix.
+ * @param d2 The second dimension of the matrices.
+ * @param input_matrix1 The first matrix.
+ * @param input_matrix2 The second matrix.
  * @return double** 
  */
 double **concate2d_mat(int d1_mat1, int d1_mat2, int d2, double **input_matrix1, double **input_matrix2)
@@ -197,11 +207,11 @@ double **concate2d_mat(int d1_mat1, int d1_mat2, int d2, double **input_matrix1,
 /**
  * @brief 
  * - Concate 2 cubes with the same dimensionality (d1,d2,d3)
- * @param d1 
- * @param d2 
- * @param d3 
- * @param array1 
- * @param array2 
+ * @param d1 The first dimension of the cube.
+ * @param d2 The second dimension of the cube.
+ * @param d3 The third dimension of the cube.
+ * @param array1 The first cube.
+ * @param array2 The second cube.
  * @return double*** 
  */
 double ***concate3d_cube(int d1,int d2,int d3,double ***array1, double ***array2)
@@ -235,8 +245,8 @@ double ***concate3d_cube(int d1,int d2,int d3,double ***array1, double ***array2
 /**
  * @brief 
  * - Take first n elements from the input array and return them.
- * @param input_array 
- * @param take_n 
+ * @param input_array The original array.
+ * @param take_n Parameter for taking n elements.
  * @return double* 
  */
 double *take1d(double *input_array, int take_n)
@@ -251,11 +261,11 @@ double *take1d(double *input_array, int take_n)
 /**
  * @brief 
  * - Take the first n matrix from cube and return them as a new cube.
- * @param d1 
- * @param d2 
- * @param d3 
- * @param input_cube 
- * @param take_n 
+ * @param d1 The first dimension of cube.
+ * @param d2 The second dimension of cube.
+ * @param d3 The third dimension of cube.
+ * @param input_cube The original cube.
+ * @param take_n Parameter for taking n matrices.
  * @return double*** 
  */
 double ***take3d(int d1,int d2,int d3,double ***input_cube, int take_n)
@@ -287,9 +297,9 @@ double ***take3d(int d1,int d2,int d3,double ***input_cube, int take_n)
 /**
  * @brief 
  * - Drop the first n elements in an array and return the rest.
- * @param input_array 
- * @param array_len 
- * @param drop_n 
+ * @param input_array The original array.
+ * @param array_len The length of input array.
+ * @param drop_n Parameter for droping n elements.
  * @return double* 
  */
 double *drop1d(double *input_array, int array_len, int drop_n)
@@ -305,10 +315,10 @@ double *drop1d(double *input_array, int array_len, int drop_n)
 /**
  * @brief 
  * - Drop the first vectors in a matrix and return the rest vectors as a new matrix.
- * @param d1 
- * @param d2 
- * @param input_matrix 
- * @param drop_n 
+ * @param d1 The first dimension of matrix.
+ * @param d2 The second dimension of matrix.
+ * @param input_matrix The original matrix.
+ * @param drop_n Parameter for droping n arrays.
  * @return double** 
  */
 double **drop2d(int d1,int d2,double **input_matrix,int drop_n)
@@ -324,7 +334,7 @@ double **drop2d(int d1,int d2,double **input_matrix,int drop_n)
     {
 //      printf("%f ",input_matrix[i][j]);
       result[i][j]=input_matrix[i+drop_n][j];
-      printf("%f  ",result[i][j]);
+    //  printf("%f  ",result[i][j]);
     }
   }
   return result;
@@ -332,11 +342,11 @@ double **drop2d(int d1,int d2,double **input_matrix,int drop_n)
 /**
  * @brief 
  * - Drop the first n matrix in a cube and return the rest as a new cube.
- * @param d1 
- * @param d2 
- * @param d3 
- * @param input_cube 
- * @param drop_n 
+ * @param d1 The first dimension of cube.
+ * @param d2 The second dimension of cube
+ * @param d3 The third dimension of cube.
+ * @param input_cube The original cube.
+ * @param drop_n Parameter for droping n matrices.
  * @return double*** 
  */
 double ***drop3d(int d1,int d2,int d3,double ***input_cube, int drop_n)
@@ -368,11 +378,11 @@ double ***drop3d(int d1,int d2,int d3,double ***input_cube, int drop_n)
 /**
  * @brief 
  * - Repeat a value n times and store in an array
- * @param input_value 
- * @param n_times 
+ * @param input_value The valued desired to be repeated.
+ * @param n_times The parameter for repeating times.
  * @return double* 
  */
-double *fanoutn1d(int input_value, int n_times)
+double *fanoutn1d(double input_value, int n_times)
 {
   double *result=(double *) malloc ((n_times)*sizeof(double));
 
@@ -385,9 +395,9 @@ double *fanoutn1d(int input_value, int n_times)
 /**
  * @brief 
  * - repeat a vector n times and store in a matrix
- * @param input_array 
- * @param array_length 
- * @param n_times 
+ * @param input_array The input array desired to be repeated.
+ * @param array_length The length of input array.
+ * @param n_times The parameter for repeating times.
  * @return double** 
  */
 double **fanoutn2d(double *input_array, int array_length, int n_times)
@@ -409,10 +419,10 @@ double **fanoutn2d(double *input_array, int array_length, int n_times)
 /**
  * @brief 
  * - Repeat a matrix n times and store it in a cube.
- * @param input_matrix 
- * @param d1 
- * @param d2 
- * @param n_times 
+ * @param input_matrix The matrix desired to be repeated.
+ * @param d1 The firsted dimension of matrix.
+ * @param d2 The second dimension of matrix.
+ * @param n_times The parameter for repearting times.
  * @return double*** 
  */
 double ***fanoutn3d(double **input_matrix, int d1, int d2, int n_times)
@@ -445,9 +455,9 @@ double ***fanoutn3d(double **input_matrix, int d1, int d2, int n_times)
  * @brief
  * - Apply the operation function on a given array.
  * - The function takes 1 input value at a time. 
- * @param operation 
- * @param input_array 
- * @param array_len 
+ * @param operation The function applied on array.
+ * @param input_array The original array.
+ * @param array_len The length of array.
  * @return double* 
  */
 double *farm11_1d(double (*operation)(double), double *input_array, int array_len)
@@ -464,10 +474,10 @@ double *farm11_1d(double (*operation)(double), double *input_array, int array_le
  * @brief 
  * - Apply the operation function on a given matrix.
  * - The function takes 1 input value at a time. 
- * @param operation 
- * @param d1 
- * @param d2 
- * @param input_matrix 
+ * @param operation The funuction applied on matrix.
+ * @param d1 The first dimension of matrix.
+ * @param d2 The second dimension of matrix.
+ * @param input_matrix The original matrix.
  * @return double** 
  */
 double **farm11_2d(double (*operation)(double), int d1,int d2,double **input_matrix)
@@ -492,10 +502,10 @@ double **farm11_2d(double (*operation)(double), int d1,int d2,double **input_mat
  * - The function takes 2 input values at a time.
  * - In order to construct a vector computing function you can farm21 the operation
  * - you would like to use over numbers. 
- * @param operation 
- * @param input_array1 
- * @param input_array2 
- * @param array_len 
+ * @param operation The operation applied on the arrays.
+ * @param input_array1 The first array.
+ * @param input_array2 The second array.
+ * @param array_len The length of array.
  * @return double* 
  */
 double *farm21_1d(double (*operation)(double,double), double *input_array1, double *input_array2, int array_len)
@@ -511,13 +521,13 @@ double *farm21_1d(double (*operation)(double,double), double *input_array1, doub
  * @brief 
  * - Apply the operation function between 4 given matrix.
  * - The function takes 4 input values at a time. 
- * @param operation 
- * @param d1 
- * @param d2 
- * @param input_matrix1 
- * @param input_matrix2 
- * @param input_matrix3 
- * @param input_matrix4 
+ * @param operation The function applied on four matrices with same size.
+ * @param d1 The first dimension of matrix.
+ * @param d2 The second dimension of matrix.
+ * @param input_matrix1 The first matrix.
+ * @param input_matrix2 The second matrix.
+ * @param input_matrix3 The third matrix.
+ * @param input_matrix4 The fourth matrix.
  * @return double** 
  */
 double **farm41_2d(double (*operation)(double,double,double,double),int d1,int d2,double **input_matrix1,double **input_matrix2,double **input_matrix3,double **input_matrix4)
@@ -539,10 +549,10 @@ double **farm41_2d(double (*operation)(double,double,double,double),int d1,int d
 /**
  * @brief 
  * - Group the input matrix into nums of vectors.
- * @param d1 
- * @param d2 
- * @param input_matrix 
- * @param num 
+ * @param d1 The first dimension of matrix.
+ * @param d2 The second dimension of matrix.
+ * @param input_matrix The input matrix.
+ * @param num The parameter for each sub group.
  * @return double*** 
  */
 double ***group2d(int d1,int d2,double **input_matrix,int num)
@@ -565,9 +575,9 @@ double ***group2d(int d1,int d2,double **input_matrix,int num)
  * - Reduce an array to a value.
  * - Apply the operation between elements inside of the input array.
  * - Return a value.
- * @param operation 
- * @param array_len 
- * @param input_array 
+ * @param operation The function applied on the input array.
+ * @param array_len The length of the input array.
+ * @param input_array The original array.
  * @return double* 
  */
 double *reduce1d(double (*operation)(double, double), int array_len, double *input_array)
@@ -586,10 +596,10 @@ double *reduce1d(double (*operation)(double, double), int array_len, double *inp
  * - Reduce a matrix to a vector.
  * - Apply the function between vectors regarding to the same position.
  * - Return a vector.
- * @param d1 
- * @param d2 
- * @param operation 
- * @param input_matrix 
+ * @param d1 The first dimension of the matrix.
+ * @param d2 The second dimension of the matrix.
+ * @param operation The function applied on the matrix.
+ * @param input_matrix The input matrix.
  * @return double* 
  */
 double *reduceV2d( int d1,int d2,double *(*operation)(double*, double*,int d2),double **input_matrix)
@@ -606,11 +616,11 @@ double *reduceV2d( int d1,int d2,double *(*operation)(double*, double*,int d2),d
  * - Reduce a cube to a matrix.
  * - Apply the function between matrix regarding to the same position.
  * - Return a matrix.
- * @param d1 
- * @param d2 
- * @param d3 
- * @param operation 
- * @param input_cube 
+ * @param d1 The first dimension of the cube.
+ * @param d2 The second dimension of the cube.
+ * @param d3 The third dimension of the cube.
+ * @param operation The function applied on the cube.
+ * @param input_cube The input cube.
  * @return double** 
  */
 double **reduceV3d(int d1,int d2,int d3, double *(*operation)(double*, double*,int d3),double ***input_cube)
@@ -636,10 +646,10 @@ double **reduceV3d(int d1,int d2,int d3, double *(*operation)(double*, double*,i
     int d2 = stencil_length;
     int d3 = in_d2;
     @endcode 
- * @param in_d1 
- * @param in_d2 
- * @param a 
- * @param stencil_length 
+ * @param in_d1 The first dimension of original matrix.
+ * @param in_d2 The second dimension of original matrix.
+ * @param a The original matrix.
+ * @param stencil_length The stencil times desired.
  * @return double*** (in_d1-stencil_length+1, stencil_length, in_d2)
  */
 double ***stencil2d(int in_d1, int in_d2, double **a, int stencil_length)
@@ -668,8 +678,8 @@ double ***stencil2d(int in_d1, int in_d2, double **a, int stencil_length)
 /**
  * @brief 
  * - Add two numbers.
- * @param input1 
- * @param input2 
+ * @param input1 The first input.
+ * @param input2 The second input.
  * @return double 
  */
 double add(double input1, double input2)
@@ -679,9 +689,9 @@ double add(double input1, double input2)
 /**
  * @brief 
  * - Add two vectors.
- * @param inputVector1 
- * @param inputVector2 
- * @param len_array 
+ * @param inputVector1 The first input vector.
+ * @param inputVector2 The second input vector.
+ * @param len_array The length of array.
  * @return double* 
  */
 double *addV(double *inputVector1,double *inputVector2,int len_array)
@@ -692,8 +702,8 @@ double *addV(double *inputVector1,double *inputVector2,int len_array)
 /**
  * @brief 
  * - Find minimum between 2 numbers.
- * @param num1 
- * @param num2 
+ * @param num1 The first input.
+ * @param num2 The second input.
  * @return double 
  */
 double minimum(double num1,double num2)
@@ -704,9 +714,9 @@ double minimum(double num1,double num2)
 /**
  * @brief 
  * - find minimum number between two vectors.
- * @param inputV1 
- * @param inputV2 
- * @param d2 
+ * @param inputV1 The first input vector.
+ * @param inputV2 The second input vector.
+ * @param d2 The length of the vector.
  * @return double* 
  */
 double *minimumVec(double *inputV1,double *inputV2 ,int d2)
@@ -717,7 +727,7 @@ double *minimumVec(double *inputV1,double *inputV2 ,int d2)
 /**
  * @brief 
  * - Compute the log2(input/4).
- * @param input 
+ * @param input Input value.
  * @return double 
  */
 double logBase2_div4(double input)
@@ -727,11 +737,21 @@ double logBase2_div4(double input)
 /**
  * @brief 
  * - Divide NoFFT by input.
- * @param input 
+ * @param input Input value.
  * @return double 
  */
 double div_N(double input)
 {
   return input/NoFFT;
+}
+/**
+ * @brief
+ * - Log base 2 function.
+ * @param input Input value.
+ * @return double
+ */
+double logBase2(double input)
+{
+  return log2(input);
 }
 

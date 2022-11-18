@@ -102,7 +102,7 @@ $(document).ready(function(){initNavTree('main_8c.html',''); initResizable(); })
 </div><!--header-->
 <div class="contents">
 
-<p>This file imports the data cubes that are passed to the AESA radar model and run some tests over the model in <a class="el" href="_a_e_s_a_8c.html" title="In AESA computation blocks, the assigned useless dynamic spaces need to be released....">AESA.c</a> file.  
+<p>This file imports the data cubes that are passed to the AESA radar model and run some tests over the model in <a class="el" href="_a_e_s_a_8c.html" title="The AESA radar use case. Composed of CFAR and CT. Also their sub systems.">AESA.c</a> file.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
@@ -120,8 +120,8 @@ Include dependency graph for main.c:</div>
 <area shape="rect" title=" " alt="" coords="27,79,91,104"/>
 <area shape="rect" title=" " alt="" coords="66,225,129,251"/>
 <area shape="rect" title=" " alt="" coords="166,79,232,104"/>
-<area shape="rect" href="skeletons_8h.html" title=" " alt="" coords="124,152,213,177"/>
-<area shape="rect" href="_a_e_s_a_8h.html" title=" " alt="" coords="256,79,326,104"/>
+<area shape="rect" href="skeletons_8h.html" title="REMIND: ALL THE SKELETONS FUNCTION AUTOMATICALLY ALLOCATES DYNAMIC SPACE MUST BE RELEASED." alt="" coords="124,152,213,177"/>
+<area shape="rect" href="_a_e_s_a_8h.html" title="REMIND: ALL THE SKELETONS FUNCTION AUTOMATICALLY ALLOCATES DYNAMIC SPACE MUST BE RELEASED." alt="" coords="256,79,326,104"/>
 </map>
 </div>
 </div><table class="memberdecls">
@@ -131,7 +131,7 @@ Macros</h2></td></tr>
 <tr class="separator:a866e42b41b8526d9dd1493d278bb9f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e8ee6e8f7371ec2709dbb5335c12a2a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a5e8ee6e8f7371ec2709dbb5335c12a2a">Nob</a>&#160;&#160;&#160;1024</td></tr>
 <tr class="separator:a5e8ee6e8f7371ec2709dbb5335c12a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2979ea28bbec7e71bd46710f81d594dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a2979ea28bbec7e71bd46710f81d594dc">NoB</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memitem:a2979ea28bbec7e71bd46710f81d594dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a2979ea28bbec7e71bd46710f81d594dc">NoB</a>&#160;&#160;&#160;8</td></tr>
 <tr class="separator:a2979ea28bbec7e71bd46710f81d594dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6c78568e5ac4cc741c5ee6dcf1a381e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ab6c78568e5ac4cc741c5ee6dcf1a381e">No2Channel</a>&#160;&#160;&#160;32</td></tr>
 <tr class="separator:ab6c78568e5ac4cc741c5ee6dcf1a381e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,11 +141,10 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
-<tr class="memdesc:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The main function read in the .csv file that has already been generated. Apply corresponding AESA computation methods and generate result.  <a href="main_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4">More...</a><br /></td></tr>
 <tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >This file imports the data cubes that are passed to the AESA radar model and run some tests over the model in <a class="el" href="_a_e_s_a_8c.html" title="In AESA computation blocks, the assigned useless dynamic spaces need to be released....">AESA.c</a> file. </p>
+<div class="textblock"><p >This file imports the data cubes that are passed to the AESA radar model and run some tests over the model in <a class="el" href="_a_e_s_a_8c.html" title="The AESA radar use case. Composed of CFAR and CT. Also their sub systems.">AESA.c</a> file. </p>
 <dl class="section author"><dt>Author</dt><dd>YuchenGao (<a href="#" onclick="location.href='mai'+'lto:'+'yuc'+'he'+'nga'+'@k'+'th.'+'se'; return false;">yuche<span class="obfuscator">.nosp@m.</span>nga@<span class="obfuscator">.nosp@m.</span>kth.s<span class="obfuscator">.nosp@m.</span>e</a>) </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>0.1 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2022-11-16</dd></dl>
@@ -165,7 +164,7 @@ Description</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >The number of data channel for real and imagine part in signal </p>
+<p >The number of data channel for real and imagine part in signal. </p>
 
 </div>
 </div>
@@ -191,7 +190,7 @@ Description</h1>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NoB&#160;&#160;&#160;2</td>
+          <td class="memname">#define NoB&#160;&#160;&#160;8</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -210,7 +209,7 @@ Description</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >The number of data channel </p>
+<p >The number of data channel. </p>
 
 </div>
 </div>
@@ -244,16 +243,10 @@ Description</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>The main function read in the .csv file that has already been generated. Apply corresponding AESA computation methods and generate result. </p>
-<dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
-<p >Firstly read from data/.. file.</p>
-<p >In the data file, each row contains 256*18&lt;4820 character position.</p>
-<p >Allocate data cube to store the numbers, the dimension of cube is (NoB,Nob,NoFFT).</p>
 <p >Perform how to store the cube: </p><div class="fragment"><div class="line">cube_idx=j/<a class="code hl_define" href="_a_e_s_a_8c.html#a5e8ee6e8f7371ec2709dbb5335c12a2a">Nob</a>;</div>
 <div class="line">pulse_idx=j%<a class="code hl_define" href="_a_e_s_a_8c.html#a5e8ee6e8f7371ec2709dbb5335c12a2a">Nob</a>; </div>
-<div class="ttc" id="a_a_e_s_a_8c_html_a5e8ee6e8f7371ec2709dbb5335c12a2a"><div class="ttname"><a href="_a_e_s_a_8c.html#a5e8ee6e8f7371ec2709dbb5335c12a2a">Nob</a></div><div class="ttdeci">#define Nob</div><div class="ttdef"><b>Definition:</b> AESA.c:18</div></div>
-</div><!-- fragment --><p> Each cube is 1024 lines and each line has 256 double precision varible the current index/Nob is the cube index, and the remainder of index divides Nob is the index for pulse. </p><div class="fragment"><div class="line">strtok() </div>
+<div class="ttc" id="a_a_e_s_a_8c_html_a5e8ee6e8f7371ec2709dbb5335c12a2a"><div class="ttname"><a href="_a_e_s_a_8c.html#a5e8ee6e8f7371ec2709dbb5335c12a2a">Nob</a></div><div class="ttdeci">#define Nob</div><div class="ttdef"><b>Definition:</b> AESA.c:31</div></div>
+</div><!-- fragment --><p> Each cube is 1024 lines and each line has 256 double precision varible. The current index/Nob is the cube index, and the remainder of index divides Nob is the index for pulse. </p><div class="fragment"><div class="line">strtok() </div>
 </div><!-- fragment --><p> This function strips the "," inside data cube and atof turns each string into float.</p>
 
 </div>

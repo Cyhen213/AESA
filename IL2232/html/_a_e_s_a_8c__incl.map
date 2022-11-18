@@ -1,8 +1,8 @@
 <map id="AESA.c" name="AESA.c">
-<area shape="rect" id="node1" title="In AESA computation blocks, the assigned useless dynamic spaces need to be released...." alt="" coords="106,5,175,31"/>
+<area shape="rect" id="node1" title="The AESA radar use case. Composed of CFAR and CT. Also their sub systems." alt="" coords="106,5,175,31"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,225,68,251"/>
-<area shape="rect" id="node3" href="$_a_e_s_a_8h.html" title=" " alt="" coords="106,79,175,104"/>
+<area shape="rect" id="node3" href="$_a_e_s_a_8h.html" title="REMIND: ALL THE SKELETONS FUNCTION AUTOMATICALLY ALLOCATES DYNAMIC SPACE MUST BE RELEASED." alt="" coords="106,79,175,104"/>
 <area shape="rect" id="node4" title=" " alt="" coords="131,225,193,251"/>
-<area shape="rect" id="node5" href="$skeletons_8h.html" title=" " alt="" coords="35,152,124,177"/>
+<area shape="rect" id="node5" href="$skeletons_8h.html" title="REMIND: ALL THE SKELETONS FUNCTION AUTOMATICALLY ALLOCATES DYNAMIC SPACE MUST BE RELEASED." alt="" coords="35,152,124,177"/>
 <area shape="rect" id="node6" title=" " alt="" coords="250,79,314,104"/>
 </map>

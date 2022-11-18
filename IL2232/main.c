@@ -1,9 +1,7 @@
 /**
  * @file main.c
  * @author YuchenGao (yuchenga@kth.se)
- * @brief This file imports the data cubes 
- * that are passed to the AESA radar model 
- * and run some tests over the model in AESA.c file.
+ * @brief This file imports the data cubes that are passed to the AESA radar model and run some tests over the model in AESA.c file.
  * @version 0.1
  * @date 2022-11-16
  * 
@@ -31,25 +29,17 @@
  */
 #define NoFFT 256//window
 #define Nob 1024 //range
-#define NoB 2//beam
+#define NoB 8//beam
 #define No2Channel 32
 #define NoChannel 16
-/**
- * @brief The main function read in the .csv file that has already been generated. Apply corresponding AESA computation methods and generate result.
- * @return int 
-*/
 int main()
 {
-/**
- * @brief Firstly read from data/.. file.
- * In the data file, each row contains 256*18<4820 character position.
- */
-  FILE *fp = fopen("data/processed_Cfar.csv", "r");
+  FILE *fp = fopen("data/processed_CfarIn_L.csv", "r");
   if (fp == NULL) {
       fprintf(stderr, "fopen() failed.\n");
       exit(EXIT_FAILURE);
   }
-  char row[4820];
+  char row[5000];
   char *tok;
   int k=0;
   double ***data_cube=allocate_cube(NoB, Nob, NoFFT);
@@ -59,8 +49,10 @@ int main()
   
   for(int j=0;j<NoB*Nob;j++)
   {
-    fgets(row, 4820, fp);
+    fgets(row, 5000, fp);
     tok = strtok(row, ",");
+    cube_idx=j/Nob;
+    pulse_idx=j%Nob;
     /**
      * @brief Perform how to store the cube: 
      * @code     
@@ -71,8 +63,6 @@ int main()
      * @code strtok() @endcode 
      * This function strips the "," inside data cube and atof turns each string into float.
      */
-    cube_idx=j/Nob;
-    pulse_idx=j%Nob;
     while(tok!=NULL)
     {
       if(k<NoFFT){data_cube[cube_idx][pulse_idx][k]=atof(tok);}
@@ -81,17 +71,30 @@ int main()
     }k=0;
   }
   fclose(fp);
-  print_cube(NoB, Nob, NoFFT, data_cube);
-//
-//  double ***result_cube=allocate_cube(NoB, Nob, NoFFT);
-//
-//  for(int i=0;i<NoB;i++)
-//  {
-//    result_cube[i]=fCFAR(Nob,NoFFT,data_cube[i]);
-//  }
-//  print_cube(NoB, Nob, NoFFT, result_cube);
-//  free_cube(NoB, Nob, NoFFT, data_cube);
-//  free_cube(NoB, Nob, NoFFT, result_cube);
+  double ***result_cube=allocate_cube(NoB, Nob, NoFFT);
+
+  for(int i=0;i<NoB;i++)
+  {
+    result_cube[i]=fCFAR(Nob,NoFFT,data_cube[i]);
+  }
+  FILE *fp1 = fopen("tmp.csv", "w+");
+     if (fp1 == NULL) {
+         fprintf(stderr, "fopen() failed.\n");
+         exit(EXIT_FAILURE);
+     }
+  for(int i=0;i<NoB;i++)
+  {
+    for(int j=0;j<Nob;j++)
+    {
+      for(int k=0;k<NoFFT;k++)
+      {
+        fprintf(fp, "%f ",result_cube[i][j][k]);
+      }
+      fprintf(fp, "\n");
+    }
+  }
+  free_cube(NoB, Nob, NoFFT, data_cube);
+  free_cube(NoB, Nob, NoFFT, result_cube);
   return 0;
 }
 

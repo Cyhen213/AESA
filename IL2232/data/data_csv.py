@@ -11,8 +11,8 @@ from pandas import DataFrame
 
 import pandas as pd
 import numpy as np
-df = pd.read_csv("CFAR_input.csv", sep=' ', header=None)
+df = pd.read_csv("DFB_L_C.csv", sep=' ', header=None)
 df=df.drop(columns=[0])
 print(np.array(df).shape)
 
-df.to_csv("processed_Cfar.csv",header=False,index=False)
+df.to_csv("processed_CfarIn_L.csv",header=False,index=False)
