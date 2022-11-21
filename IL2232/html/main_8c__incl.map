@@ -1,9 +1,0 @@
-<map id="main.c" name="main.c">
-<area shape="rect" id="node1" title="This file imports the data cubes that are passed to the AESA radar model and run some tests over the ..." alt="" coords="132,5,194,31"/>
-<area shape="rect" id="node2" title=" " alt="" coords="260,225,322,251"/>
-<area shape="rect" id="node3" title=" " alt="" coords="27,79,91,104"/>
-<area shape="rect" id="node4" title=" " alt="" coords="66,225,129,251"/>
-<area shape="rect" id="node5" title=" " alt="" coords="166,79,232,104"/>
-<area shape="rect" id="node6" href="$skeletons_8h.html" title="REMIND: ALL THE SKELETONS FUNCTION AUTOMATICALLY ALLOCATES DYNAMIC SPACE MUST BE RELEASED." alt="" coords="124,152,213,177"/>
-<area shape="rect" id="node7" href="$_a_e_s_a_8h.html" title="REMIND: ALL THE SKELETONS FUNCTION AUTOMATICALLY ALLOCATES DYNAMIC SPACE MUST BE RELEASED." alt="" coords="256,79,326,104"/>
-</map>
