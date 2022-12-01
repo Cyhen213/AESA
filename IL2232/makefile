@@ -1,4 +1,4 @@
-CC=gcc -pg #compiler
+CC=gcc-12 #compiler
 TARGET=main #target file name
  
 all:

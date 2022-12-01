@@ -43,10 +43,10 @@ int main()
   char *tok;
   int k=0;
   double ***data_cube=allocate_cube(NoB, Nob, NoFFT);
-  
+
   int cube_idx;
   int pulse_idx;
-  
+
   for(int j=0;j<NoB*Nob;j++)
   {
     fgets(row, 5000, fp);
@@ -54,25 +54,24 @@ int main()
     cube_idx=j/Nob;
     pulse_idx=j%Nob;
     /**
-     * @brief Perform how to store the cube: 
-     * @code     
+     * @brief Perform how to store the cube:
+     * @code
      * cube_idx=j/Nob;
        pulse_idx=j%Nob; @endcode
      * Each cube is 1024 lines and each line has 256 double precision varible.
      * The current index/Nob is the cube index, and the remainder of index divides Nob is the index for pulse.
-     * @code strtok() @endcode 
+     * @code strtok() @endcode
      * This function strips the "," inside data cube and atof turns each string into float.
      */
     while(tok!=NULL)
     {
-      if(k<NoFFT){data_cube[cube_idx][pulse_idx][k]=atof(tok);}
+      if(k<NoFFT){data_cube[cube_idx][pulse_idx][k]=strtod(tok,NULL);}
       k+=1;
       tok=strtok(NULL,",");
     }k=0;
   }
   fclose(fp);
   double ***result_cube=allocate_cube(NoB, Nob, NoFFT);
-
   for(int i=0;i<NoB;i++)
   {
     result_cube[i]=fCFAR(Nob,NoFFT,data_cube[i]);
@@ -88,7 +87,7 @@ int main()
     {
       for(int k=0;k<NoFFT;k++)
       {
-        fprintf(fp, "%f ",result_cube[i][j][k]);
+        fprintf(fp, "%.16lf ",result_cube[i][j][k]);
       }
       fprintf(fp, "\n");
     }
@@ -97,6 +96,7 @@ int main()
   free_cube(NoB, Nob, NoFFT, result_cube);
   return 0;
 }
+
 
 //Test for the sequential cubes
 //int main(int argc, const char *argv[])

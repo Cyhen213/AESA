@@ -22,6 +22,7 @@
  * @def NoChannel
  * The number of data channel.
  */
+#include <sys/time.h>
 #include <math.h>
 #include "AESA.h"
 #include "skeletons.h"
@@ -32,8 +33,15 @@
 #define NoB 8
 #define No2Channel 32
 #define NoChannel 16
+
+double cpuSecond(void)
+{
+  struct timeval tp;
+  gettimeofday(&tp,NULL);
+  return ((double)tp.tv_sec + (double)tp.tv_usec*1.e-6);
+}
 /**
- * @brief 
+ * @brief
  * - Overlap function execute the 'mealy machine' pattern.
  * - It delays the input data cube for one state and concate the current state with first half of data cube, storing the last half data cube as next state.
  * @param d1 The dimension of input cube (d1,d2,d3).
@@ -41,7 +49,7 @@
  * @param d3 The third dimension of input cube.
  * @param inputCube (d1,d2,d3)
  * @param nextState (d1/2,d2,d3)
- * @return double*** 
+ * @return double***
  */
 double ***overlap(int d1,int d2,int d3,double ***inputCube,double ***nextState)
 {
@@ -170,19 +178,55 @@ double normCfa(double m,double a,double l,double e)
  */
 double **fCFAR(int d1,int d2,double **input_matrix)
 {
+  double stencilStart=cpuSecond();
   double ***neighbors=stencil2d(d1, d2, input_matrix, NoFFT);
+  double stencilElaps = cpuSecond() - stencilStart;
+  printf("The stencil function takes : %f\n",stencilElaps);
+  
   double **arithm=(double **) malloc ((d1-NoFFT+1)*sizeof(double *));
+  double arithStart=cpuSecond();
   for(int i=0;i<d1-NoFFT+1;i++)
   {
     arithm[i]=arithmean(NoFFT, d2, neighbors[i]);
   }
+  double arithElaps = cpuSecond() - arithStart;
+  printf("The arithmean module(1024-256+1)times of arithmean operation takes : %f\n",arithElaps);
+
+  double mdStart=cpuSecond();
   double **md_result=md(d1, d2, input_matrix);
+  double mdElaps = cpuSecond() - mdStart;
+  printf("The minimum value function takes : %f\n",mdElaps);
+  
+  double fanoutStart=cpuSecond();
   double **dummy_emv=fanoutn2d(fanoutn1d(-1000, d2), d2, NoFFT-1);
+  double fanoutElaps = cpuSecond() - fanoutStart;
+  printf("The fanout (NoFFT-1,d2) function takes : %f\n",fanoutElaps);
+  
+  double fanout1Start=cpuSecond();
   double **dummy_lmv=fanoutn2d(fanoutn1d(-1000, d2), d2, NoFFT-1+2);
+  double fanout1Elaps = cpuSecond() - fanout1Start;
+  printf("The fanout (NoFFT+1,d2) function takes : %f\n",fanout1Elaps);
+  
+  double dropStart=cpuSecond();
   double **droped_mat=drop2d(d1-NoFFT+1, d2, arithm, 2);
+  double dropElaps = cpuSecond() - dropStart;
+  printf("The drop function takes : %f\n",dropElaps);
+  
+  double concateStart=cpuSecond();
   double **lmv=concate2d_mat(d1-NoFFT+1-2,NoFFT-1+2, d2,droped_mat, dummy_lmv);
+  double concateElaps = cpuSecond() - concateStart;
+  printf("The concate(d1-NoFFT+1-2,NoFFT-1+2) function takes : %f\n",concateElaps);
+  
+  double concate1Start=cpuSecond();
   double **emv=concate2d_mat(NoFFT-1,d1-NoFFT+1, d2, dummy_emv, arithm);
+  double concate1Elaps = cpuSecond() - concate1Start;
+  printf("The concate (NoFFT-1,d1-NoFFT+1) function takes : %f\n",concate1Elaps);
+  
+  double farm41Start=cpuSecond();
   double **result=farm41_2d(normCfa, d1, d2, md_result, input_matrix, lmv, emv);
+  double farm41Elaps = cpuSecond() - farm41Start;
+  printf("The farm41 function takes : %f\n",farm41Elaps);
+  printf("\n");
   free_cube(d1-NoFFT+1, NoFFT,d2, neighbors);
   free_matrix(d1-NoFFT+1, d2, arithm);
   free_matrix(d1-NoFFT+1-2, d2, droped_mat);

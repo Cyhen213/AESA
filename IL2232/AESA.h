@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "skeletons.h"
+double cpuSecond(void);
 double ***overlap(int d1,int d2,int d3,double ***Cube,double ***nextState);
 double **fCFAR(int d1,int d2,double **input_matrix);
 double *geomean(int d1,int d2,double **input_matrix);

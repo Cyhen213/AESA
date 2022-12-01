@@ -130,7 +130,7 @@ void print_array(double *array, int length)
 {
   for(int i=0;i<length;i++)
   {
-    printf("%f ", array[i]);
+    printf("%.16lf ", array[i]);
   }
   printf("\n");
 }
@@ -138,7 +138,7 @@ void print_matrix(int d1,int d2,double **matrix)
 {
   for (int i = 0; i < d1; i++){
       for (int j = 0; j < d2; j++){
-              printf("%f ", matrix[i][j]);
+              printf("%.16lf ", matrix[i][j]);
       }
     printf("\n");
   }
@@ -148,7 +148,7 @@ void print_cube(int d1,int d2,int d3,double ***cube)
   for (int i = 0; i < d1; i++){
       for (int j = 0; j < d2; j++){
           for (int k = 0; k < d3; k++){
-              printf("%f ", cube[i][j][k]);
+              printf("%.16lf ", cube[i][j][k]);
           }
         printf("\n");
       }
@@ -363,13 +363,13 @@ double ***drop3d(int d1,int d2,int d3,double ***input_cube, int drop_n)
       result[i][j]=(double *) malloc (d3*sizeof(double));
     }
   }
-  for(int i=drop_n;i<d1;i++)
+  for(int i=0;i<d1-drop_n;i++)
   {
     for(int j=0;j<d2;j++)
     {
       for(int k=0;k<d3;k++)
       {
-        result[i-drop_n][j][k]=input_cube[i][j][k];
+        result[i][j][k]=input_cube[i+drop_n][j][k];
       }
     }
   }
@@ -427,19 +427,8 @@ double **fanoutn2d(double *input_array, int array_length, int n_times)
  */
 double ***fanoutn3d(double **input_matrix, int d1, int d2, int n_times)
 {
-  double ***result=(double ***) malloc (n_times*sizeof(double **));
-  for(int i=0;i<d1;i++)
-  {
-    result[i]=(double **) malloc (d1*sizeof(double *));
-  }
-  for(int i=0;i<n_times;i++)
-  {
-    for(int j=0;j<d1;j++)
-    {
-      result[i][j]=(double *) malloc (d2*sizeof(double));
-    }
-  }
-  for(int i=0;i<n_times;i++)
+  double ***result=allocate_cube(n_times, d1, d2);
+    for(int i=0;i<n_times;i++)
   {
     for(int j=0;j<d1;j++)
     {
@@ -463,7 +452,6 @@ double ***fanoutn3d(double **input_matrix, int d1, int d2, int n_times)
 double *farm11_1d(double (*operation)(double), double *input_array, int array_len)
 {
   double *result=(double *) malloc ((array_len)*sizeof(double));
-
   for(int i=0;i<array_len;i++)
   {
     result[i]=operation(*(input_array+i));
@@ -482,7 +470,7 @@ double *farm11_1d(double (*operation)(double), double *input_array, int array_le
  */
 double **farm11_2d(double (*operation)(double), int d1,int d2,double **input_matrix)
 {
-  double **result=(double **) malloc (d1*sizeof(double));
+  double **result=(double **) malloc (d1*sizeof(double*));
   for(int i=0;i<d1;i++)
   {
     result[i]=(double *) malloc (d2*sizeof(double));
@@ -557,8 +545,9 @@ double **farm41_2d(double (*operation)(double,double,double,double),int d1,int d
  */
 double ***group2d(int d1,int d2,double **input_matrix,int num)
 {
-  double ***result=allocate_cube(d1/num,num,d2);
-  for(int i=0;i<d1/num;i++)
+  int d1_in=d1/num;
+  double ***result=allocate_cube(d1_in,num,d2);
+  for(int i=0;i<d1_in;i++)
   {
     for(int j=0;j<num;j++)
     {
@@ -583,7 +572,6 @@ double ***group2d(int d1,int d2,double **input_matrix,int num)
 double *reduce1d(double (*operation)(double, double), int array_len, double *input_array)
 {
   double *result=(double *) malloc ((1)*sizeof(double));
-
   *result=operation(*input_array,*(input_array+1));
   for(int i=2;i<array_len;i++)
   {
@@ -602,11 +590,11 @@ double *reduce1d(double (*operation)(double, double), int array_len, double *inp
  * @param input_matrix The input matrix.
  * @return double* 
  */
-double *reduceV2d( int d1,int d2,double *(*operation)(double*, double*,int d2),double **input_matrix)
+double *reduceV2d(int d1,int d2,double *(*operation)(double*, double*,int d2),double **input_matrix)
 {
-  double *result=(double *) malloc (d2*sizeof(double));
-  result=operation(input_matrix[0],input_matrix[1],d2);
-  for(int i=2;i<d1;i++){
+  double *result=operation(input_matrix[0],input_matrix[1],d2);
+  for(int i=2;i<d1;i++)
+  {
       result=operation(result,input_matrix[i],d2);
   }
   return result;
